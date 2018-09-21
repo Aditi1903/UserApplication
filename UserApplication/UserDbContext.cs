@@ -14,7 +14,7 @@ namespace UserApplication
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserInRole> UserInRoles { get; set; }
-        public DbSet<UserAddress> UserAddresses { get; set; }
+        public DbSet<Address> UserAddresses { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<City> Cities { get; set; }
