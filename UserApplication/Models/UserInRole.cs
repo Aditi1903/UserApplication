@@ -9,9 +9,18 @@ namespace UserApplication.Models
 {
     public class UserInRole
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserInRoleId { get; set; }
+
+        //[Required]
         public int UserId { get; set; }
+        //[ForeignKey("UserId")]
+        public virtual User User { get; set; }
+
+       // [Required]
         public int RoleId { get; set; }
+        //[ForeignKey("RoleId")]
+        public virtual Role Role { get; set; }
     }
 }

@@ -11,17 +11,18 @@ namespace UserApplication
     {
         public UserDbContext() : base("UserDbContext")
         { }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserInRole> UserInRoles { get; set; }
-        public DbSet<Address> UserAddresses { get; set; }
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<State> States { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<SubjectInCourse> SubjectsInCourses { get; set; }
-        public DbSet<TeacherInSubject> TeacherInSubjects { get; set; }
-        public DbSet<Subject> Subjects { get; set; }
+
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserInRole> UserInRoles { get; set; }
+        public virtual DbSet<Address> UserAddresses { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<SubjectInCourse> SubjectsInCourses { get; set; }
+        public virtual DbSet<TeacherInSubject> TeacherInSubjects { get; set; }
+        public virtual DbSet<Subject> Subjects { get; set; }
        
     }
 }

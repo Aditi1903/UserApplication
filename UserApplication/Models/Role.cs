@@ -9,10 +9,14 @@ namespace UserApplication.Models
 {
     public class Role
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int RoleId { get; set; }
-        [Display(Name ="Role Name")]
+        //[Display(Name = "Role Name")]
         public string RoleName { get; set; }
+        public virtual ICollection<User> Users {get;set;}
+        public virtual ICollection<UserInRole> UserInRoles { get; set; }
 
     }
 }
