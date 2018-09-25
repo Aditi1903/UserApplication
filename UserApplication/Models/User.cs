@@ -32,7 +32,7 @@ namespace UserApplication.Models
        // [Required(ErrorMessage = "Please enter valid DOB")]
         public DateTime DOB { get; set; }
 
-        //[Display(Name = "RoleId")]
+        [Display(Name = "Role")]
         //[Required]
         public int RoleId { get; set; }
         //[ForeignKey("RoleId")]

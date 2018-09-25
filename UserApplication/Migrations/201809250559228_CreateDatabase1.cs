@@ -3,7 +3,7 @@ namespace UserApplication.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateDatabase : DbMigration
+    public partial class CreateDatabase1 : DbMigration
     {
         public override void Up()
         {
@@ -16,7 +16,7 @@ namespace UserApplication.Migrations
                         StateId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.CityId)
-                .ForeignKey("dbo.States", t => t.StateId, cascadeDelete: true)
+                .ForeignKey("dbo.States", t => t.StateId, cascadeDelete: false) //Changes done
                 .Index(t => t.StateId);
             
             CreateTable(
@@ -68,12 +68,12 @@ namespace UserApplication.Migrations
                 c => new
                     {
                         UserId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(nullable: false),
-                        LastName = c.String(nullable: false),
-                        Gender = c.String(nullable: false),
-                        Hobbies = c.String(nullable: false),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        Gender = c.String(),
+                        Hobbies = c.String(),
                         Password = c.String(),
-                        Email = c.String(nullable: false),
+                        Email = c.String(),
                         DOB = c.DateTime(nullable: false),
                         RoleId = c.Int(nullable: false),
                         CourseId = c.Int(nullable: false),
@@ -149,7 +149,7 @@ namespace UserApplication.Migrations
                     })
                 .PrimaryKey(t => t.UserInRoleId)
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: false)  //Changes done
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
             
