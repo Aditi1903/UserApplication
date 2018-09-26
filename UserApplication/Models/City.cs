@@ -14,8 +14,10 @@ namespace UserApplication.Models
         public int CityId { get; set; }
         public string CityName { get; set; }
 
+
+
     
-        //[Required]
+        [Required]
         public int StateId { get; set; }
         //[ForeignKey("StateId")]
         public  State State { get; set; }

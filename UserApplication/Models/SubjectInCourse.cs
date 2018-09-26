@@ -11,15 +11,18 @@ namespace UserApplication.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
         public int SubjectInCourseId { get; set; }
 
-        //[Required]
+
+
+        [Required]
         public int SubjectId { get; set; }
         //[ForeignKey("SubjectId")]
         public virtual Subject Subject { get; set; }
 
-        //[Required]
+
+
+        [Required]
         public int CourseId { get; set; }
         //[ForeignKey("CourseId")]
         public virtual Course Course { get; set; }

@@ -11,7 +11,6 @@ namespace UserApplication.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
         public int CourseId { get; set; }
         [Display(Name ="Course Name")]
         public string CourseName { get; set; }

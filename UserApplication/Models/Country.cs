@@ -11,7 +11,6 @@ namespace UserApplication.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        [Required]
         public int ContryId { get; set; }
         [Display(Name="Country Name")]
         public string CountryName { get; set; }

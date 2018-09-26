@@ -11,7 +11,6 @@ namespace UserApplication.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
         public int RoleId { get; set; }
         //[Display(Name = "Role Name")]
         public string RoleName { get; set; }
