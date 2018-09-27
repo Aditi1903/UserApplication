@@ -17,14 +17,14 @@ namespace UserApplication.Models
 
         [Required]
         public int SubjectId { get; set; }
-        //[ForeignKey("SubjectId")]
+        [ForeignKey("SubjectId")]
         public virtual Subject Subject { get; set; }
 
 
 
         [Required]
         public int CourseId { get; set; }
-        //[ForeignKey("CourseId")]
+        [ForeignKey("CourseId")]
         public virtual Course Course { get; set; }
     }
 }

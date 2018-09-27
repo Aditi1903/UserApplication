@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,14 +18,15 @@ namespace UserApplication.Models
 
         [Required]
         public int UserId { get; set; }
-        //[ForeignKey("UserId")]
+        [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
 
 
         [Required]
+        [DisplayName("Role")]
         public int RoleId { get; set; }
-        //[ForeignKey("RoleId")]
+        [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
     }
 }

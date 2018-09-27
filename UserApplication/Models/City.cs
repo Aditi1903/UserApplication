@@ -19,7 +19,7 @@ namespace UserApplication.Models
     
         [Required]
         public int StateId { get; set; }
-        //[ForeignKey("StateId")]
+        [ForeignKey("StateId")]
         public  State State { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
 

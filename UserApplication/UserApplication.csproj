@@ -154,13 +154,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201809250559228_CreateDatabase1.cs" />
-    <Compile Include="Migrations\201809250559228_CreateDatabase1.Designer.cs">
-      <DependentUpon>201809250559228_CreateDatabase1.cs</DependentUpon>
+    <Compile Include="Migrations\201809270903514_NewDatabase.cs" />
+    <Compile Include="Migrations\201809270903514_NewDatabase.Designer.cs">
+      <DependentUpon>201809270903514_NewDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\City.cs" />
@@ -218,7 +218,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Student\Registration.cshtml" />
+    <Content Include="Views\User\Registration.cshtml" />
+    <Content Include="Views\Shared\_CreateButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_BackToListButtonPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -237,8 +239,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201809250559228_CreateDatabase1.resx">
-      <DependentUpon>201809250559228_CreateDatabase1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201809270903514_NewDatabase.resx">
+      <DependentUpon>201809270903514_NewDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

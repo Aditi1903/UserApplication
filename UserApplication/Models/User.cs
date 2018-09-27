@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,12 +15,12 @@ namespace UserApplication.Models
         public int UserId { get; set; }
 
 
-        [Display(Name = "First Name")]
+        [DisplayName( "First Name")]
         [Required(ErrorMessage = "FirstName is required")]
         public string FirstName { get; set; }
 
 
-        [Display(Name = "Last Name")]
+        [DisplayName ("Last Name")]
         [Required(ErrorMessage = "LastName is required")]
         public string LastName { get; set; }
 
@@ -46,18 +47,38 @@ namespace UserApplication.Models
         public DateTime DOB { get; set; }
 
 
-        [Display(Name = "Role")]
-        [Required]
+        [Required(ErrorMessage ="Please select the course")]
+        [DisplayName ("Role")]
         public int RoleId { get; set; }
-        //[ForeignKey("RoleId")]
+        [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
 
 
-        [Display(Name = "Course")]
-        [Required]
+        [Required(ErrorMessage ="Please select the course")]
+        [DisplayName ("Course")]
         public int CourseId { get; set; }
-        //[ForeignKey("CourseId")]
+        [ForeignKey("CourseId")]
         public virtual Course Course { get; set; }
+
+
+
+        [Required(ErrorMessage = "Enter your permanent address")]
+        [DisplayName("Permanent Address")]
+        public string AddressLine1 { get; set; }
+
+
+        [Required(ErrorMessage = "Enter your current address")]
+        [DisplayName("Temporary Address")]
+        public string AddressLine2 { get; set; }
+
+
+        [Required(ErrorMessage = "This field cannot be null")]
+        [DisplayName("Address")]
+        public int AddressId { get; set; }
+        [ForeignKey("AddressId")]
+        public virtual Address Address { get; set; }
+
+
 
 
         public virtual ICollection<Address> Addresses { get; set; }

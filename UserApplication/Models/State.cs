@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,14 +14,14 @@ namespace UserApplication.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StateId { get; set; }
-        [Display(Name ="State Name")]
+        [DisplayName ("State Name")]
         public string StateName { get; set; }
 
 
 
       
         public int CountryId { get; set; }
-        //[ForeignKey("CountryId")]    
+        [ForeignKey("CountryId")]    
         public virtual Country Country { get; set; }
 
 

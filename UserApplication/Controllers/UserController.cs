@@ -7,7 +7,7 @@ using UserApplication.Models;
 
 namespace UserApplication.Controllers
 {
-    public class StudentController : Controller
+    public class UserController : Controller
     {
         private UserDbContext obj = new UserDbContext();
 

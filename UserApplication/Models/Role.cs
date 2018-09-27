@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace UserApplication.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DisplayName("Role")]
         public int RoleId { get; set; }
-        //[Display(Name = "Role Name")]
+        [DisplayName ("Role")]
         public string RoleName { get; set; }
         public virtual ICollection<User> Users {get;set;}
         public virtual ICollection<UserInRole> UserInRoles { get; set; }

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
+
 
 namespace UserApplication.Models
 {
@@ -17,42 +20,45 @@ namespace UserApplication.Models
 
         [Required]
         public int UserId { get; set; }
-       // [ForeignKey("UserId")]
+        [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
 
 
 
-        [Display(Name = "Country Name")]
+        [DisplayName ("Country Name")]
         [Required(ErrorMessage = "Please select your Country")]
         public int CountryId { get; set; }
-        //[ForeignKey("CountryId")]
+        [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }
 
 
 
 
-        [Display(Name = "State Name")]
+        [DisplayName ("State Name")]
         [Required(ErrorMessage = "Please select your State")]
         public int StateId { get; set; }
-        //[ForeignKey("StateId")]
+        [ForeignKey("StateId")]
         public virtual State State { get; set; }
 
 
 
 
-        [Display(Name = "City Name")]
+        [DisplayName("City Name")]
         [Required(ErrorMessage = "Please select your City name")]
         public int CityId { get; set; }
-        //[ForeignKey("CityId")]
+        [ForeignKey("CityId")]
         public virtual City City { get; set; }
 
 
 
 
-        [Display(Name = "Zip code")]
+        [DisplayName ("Zip code")]
         [Required(ErrorMessage = "Please enter Zipcode")]
         public int Zipcode { get; set; }
+
+
+        
 
 
 
