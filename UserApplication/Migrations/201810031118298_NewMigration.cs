@@ -3,7 +3,7 @@ namespace UserApplication.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class NewDatabase : DbMigration
+    public partial class NewMigration : DbMigration
     {
         public override void Up()
         {
@@ -34,7 +34,7 @@ namespace UserApplication.Migrations
                 .PrimaryKey(t => t.AddressId)
                 .ForeignKey("dbo.Cities", t => t.CityId, cascadeDelete: true)
                 .ForeignKey("dbo.Countries", t => t.CountryId, cascadeDelete: true)
-                .ForeignKey("dbo.States", t => t.StateId, cascadeDelete: false)    //change
+                .ForeignKey("dbo.States", t => t.StateId, cascadeDelete: false)
                 .ForeignKey("dbo.Users", t => t.User_UserId)
                 .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
@@ -47,10 +47,10 @@ namespace UserApplication.Migrations
                 "dbo.Countries",
                 c => new
                     {
-                        ContryId = c.Int(nullable: false, identity: true),
+                        CountryId = c.Int(nullable: false, identity: true),
                         CountryName = c.String(),
                     })
-                .PrimaryKey(t => t.ContryId);
+                .PrimaryKey(t => t.CountryId);
             
             CreateTable(
                 "dbo.States",
@@ -61,7 +61,7 @@ namespace UserApplication.Migrations
                         CountryId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.StateId)
-                .ForeignKey("dbo.Countries", t => t.CountryId, cascadeDelete: false)   //change
+                .ForeignKey("dbo.Countries", t => t.CountryId, cascadeDelete: false)
                 .Index(t => t.CountryId);
             
             CreateTable(
@@ -83,7 +83,7 @@ namespace UserApplication.Migrations
                         AddressId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.Addresses", t => t.AddressId, cascadeDelete: false)  //change
+                .ForeignKey("dbo.Addresses", t => t.AddressId, cascadeDelete: false)
                 .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
                 .Index(t => t.RoleId)
@@ -155,7 +155,7 @@ namespace UserApplication.Migrations
                     })
                 .PrimaryKey(t => t.UserInRoleId)
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: false)   //change
+                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: false)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
             

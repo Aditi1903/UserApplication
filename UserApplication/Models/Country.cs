@@ -11,7 +11,7 @@ namespace UserApplication.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public int ContryId { get; set; }
+        public int CountryId { get; set; }
         [Display(Name="Country Name")]
         public string CountryName { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
