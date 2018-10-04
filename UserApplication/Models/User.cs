@@ -80,8 +80,24 @@ namespace UserApplication.Models
 
 
 
+        [Required]
+        [DisplayName("Date Created")]
+        public DateTime DateCreated { get; set; }
 
-        public virtual ICollection<Address> Addresses { get; set; }
+
+
+        [Required]
+        [DisplayName("Date Modified")]
+        public DateTime DateModified { get; set; }
+
+
+
+        [Required]
+        [DisplayName("Is Active")]
+        public bool IsActive { get; set; }
+
+
+
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
         public virtual ICollection<UserInRole> UserInRoles { get; set; }
 

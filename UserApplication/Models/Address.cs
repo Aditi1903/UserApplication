@@ -18,13 +18,6 @@ namespace UserApplication.Models
 
 
 
-        [Required]
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; }
-
-
-
 
         [DisplayName ("Country Name")]
         [Required(ErrorMessage = "Please select your Country")]
@@ -58,7 +51,10 @@ namespace UserApplication.Models
         public int Zipcode { get; set; }
 
 
-        
+        public virtual ICollection<User> Users { get; set; }
+
+
+
 
 
 

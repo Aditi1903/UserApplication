@@ -75,6 +75,7 @@ namespace UserApplication.Controllers
             select.AddressLine1 = user.AddressLine1;
             select.AddressLine2 = user.AddressLine2;
             select.AddressId = user.AddressId;
+            
 
             obj.Users.Add(user);
             obj.SaveChanges();
@@ -88,6 +89,15 @@ namespace UserApplication.Controllers
             obj.UserInRoles.Add(userInRole);
             obj.SaveChanges();
 
+            int latestAddressId = user.AddressId;
+
+            Address address = new Address();
+            address.CountryId = latestAddressId;
+            address.StateId = latestAddressId;
+            address.CityId = latestAddressId;
+
+            obj.UserAddresses.Add(address);
+            obj.SaveChanges();
 
             return View(user);
         }
