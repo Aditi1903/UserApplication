@@ -98,6 +98,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Hobbies, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
+            @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { @id = "txtFname" });
             @Html.EditorFor(model => model.Hobbies, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger" })
         </div>
@@ -172,7 +173,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Address.Country, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("Country", null, "--select country--")
+            @Html.DropDownList("Country", new SelectList(ViewBag.CountryList.Items, "CountryId", "CountryName"))
         </div>
     </div>
 
@@ -185,11 +186,36 @@
     </div>
 
     <div class="form-group">
+            @Html.LabelFor(model => model.Address.City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="city">--Select--</select>
+                @*@Html.DropDownList("ddlCity", nu, "Select City");*@
+            </div>
+        </div>
+
+   
+    @*<div class="form-group">
         @Html.LabelFor(model => model.Address.City, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <select id="city">--Select--</select>
+            @Html.DropDownList("city",
+   (IEnumerable<SelectListItem>)ViewBag.citydrop,"Select country")
+        </div>
+    </div>*@
+
+
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address.Zipcode, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Address.Zipcode, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Address.Zipcode, "", new { @class = "text-danger" })
         </div>
     </div>
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })

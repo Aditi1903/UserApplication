@@ -101,5 +101,6 @@ namespace UserApplication.Models
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
         public virtual ICollection<UserInRole> UserInRoles { get; set; }
 
+
     }
 }

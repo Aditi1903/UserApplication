@@ -40,7 +40,10 @@ namespace UserApplication.Controllers
             return View();
         }
 
-        // Coding for dropdown
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -49,58 +52,65 @@ namespace UserApplication.Controllers
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
             List<Course> Lists = obj.Courses.ToList();
             ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
-            ViewBag.CountryList = new SelectList(obj.Countries, "ContryId", "CountryName");
+            ViewBag.CountryList = new SelectList(obj.Countries, "CountryId", "CountryName");
+           
+
             return View();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userValue"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult Index(User user)
+        public ActionResult Index(User userValue)
         {
+           
             List<Role> List = obj.Roles.ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
             List<Course> Lists = obj.Courses.ToList();
             ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
-          
+
+           // string strDDLValue = Request.Form["Country"].ToString();
 
             User select = new User();
-            select.UserId = user.UserId;
-            select.FirstName = user.FirstName;
-            select.LastName = user.LastName;
-            select.Gender = user.Gender;
-            select.Hobbies = user.Hobbies;
-            select.Password = user.Password;
-            select.Email = user.Email;
-            select.DOB = user.DOB;
-            select.RoleId = user.RoleId;
-            select.CourseId = user.CourseId;
-            select.AddressLine1 = user.AddressLine1;
-            select.AddressLine2 = user.AddressLine2;
-            select.AddressId = user.AddressId;
-            
+            select.UserId = userValue.UserId;
+            select.FirstName = userValue.FirstName;
+            select.LastName = userValue.LastName;
+            select.Gender = userValue.Gender;
+            select.Hobbies = userValue.Hobbies;
+            select.Password = userValue.Password;
+            select.Email = userValue.Email;
+            select.DOB = userValue.DOB;
+            select.RoleId = userValue.RoleId;
+            select.CourseId = userValue.CourseId;
+            select.AddressLine1 = userValue.AddressLine1;
+            select.AddressLine2 = userValue.AddressLine2;
+            select.AddressId = userValue.AddressId;
 
-            obj.Users.Add(user);
+            obj.Users.Add(userValue);
             obj.SaveChanges();
 
-            int latestUserId = user.UserId;
+            int latestUserId = userValue.UserId;
 
             UserInRole userInRole = new UserInRole();
             userInRole.UserId = latestUserId;
-            userInRole.RoleId = user.RoleId;
+            userInRole.RoleId = userValue.RoleId;
 
             obj.UserInRoles.Add(userInRole);
             obj.SaveChanges();
 
-            int latestAddressId = user.AddressId;
+        
 
-            Address address = new Address();
-            address.CountryId = latestAddressId;
-            address.StateId = latestAddressId;
-            address.CityId = latestAddressId;
-
-            obj.UserAddresses.Add(address);
-            obj.SaveChanges();
-
-            return View(user);
+            
+            return View(userValue);
         }
+
+
+        public int GetAdressId()
+        { return 0; }
+        
         SqlConnection UserDbContext = new SqlConnection(ConfigurationManager.ConnectionStrings["UserDbContext"].ConnectionString);
         //Get all country
         public DataSet Get_Country()
