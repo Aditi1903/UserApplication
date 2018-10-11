@@ -16,7 +16,6 @@ namespace UserApplication.Models
         [DisplayName ("Subject Name")]
         public string SubjectName { get; set; }
 
-
         public virtual ICollection<SubjectInCourse> SubjectInCourses { get; set; }
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
 

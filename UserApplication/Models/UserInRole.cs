@@ -14,14 +14,10 @@ namespace UserApplication.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserInRoleId { get; set; }
 
-
-
         [Required]
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
-
-
 
         [Required]
         [DisplayName("Role")]

@@ -14,6 +14,7 @@ namespace UserApplication.Models
         public int CountryId { get; set; }
         [Display(Name="Country Name")]
         public string CountryName { get; set; }
+
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<State> States { get; set; }
     }

@@ -8,7 +8,7 @@ using System.Web;
 
 namespace UserApplication.Models
 {
-    public class User
+    public class UserViewModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -42,15 +42,11 @@ namespace UserApplication.Models
         [Required(ErrorMessage = "Please select the course")]
         [DisplayName("Role")]
         public int RoleId { get; set; }
-        [ForeignKey("RoleId")]
-        public virtual Role Role { get; set; }
 
         [Required(ErrorMessage = "Please select the course")]
         [DisplayName("Course")]
         public int CourseId { get; set; }
-        [ForeignKey("CourseId")]
-        public virtual Course Course { get; set; }
-
+       
         [Required(ErrorMessage = "Enter your permanent address")]
         [DisplayName("Permanent Address")]
         public string AddressLine1 { get; set; }
@@ -62,8 +58,22 @@ namespace UserApplication.Models
         [Required(ErrorMessage = "This field cannot be null")]
         [DisplayName("Address")]
         public int AddressId { get; set; }
-        [ForeignKey("AddressId")]
-        public virtual Address Address { get; set; }
+       
+        [DisplayName("Country Name")]
+        [Required(ErrorMessage = "Please select your Country")]
+        public int CountryId { get; set; }
+        
+        [DisplayName("State Name")]
+        [Required(ErrorMessage = "Please select your State")]
+        public int StateId { get; set; }
+       
+        [DisplayName("City Name")]
+        [Required(ErrorMessage = "Please select your City name")]
+        public int CityId { get; set; }
+       
+        [DisplayName("Zip code")]
+        [Required(ErrorMessage = "Please enter Zipcode")]
+        public int Zipcode { get; set; }
 
         [Required]
         [DisplayName("Date Created")]
@@ -76,10 +86,6 @@ namespace UserApplication.Models
         [Required]
         [DisplayName("Is Active")]
         public bool IsActive { get; set; }
-
-        public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
-        public virtual ICollection<UserInRole> UserInRoles { get; set; }
-
 
     }
 }

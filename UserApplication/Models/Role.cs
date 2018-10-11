@@ -16,6 +16,7 @@ namespace UserApplication.Models
         public int RoleId { get; set; }
         [DisplayName ("Role")]
         public string RoleName { get; set; }
+
         public virtual ICollection<User> Users {get;set;}
         public virtual ICollection<UserInRole> UserInRoles { get; set; }
 

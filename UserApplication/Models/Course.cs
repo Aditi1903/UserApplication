@@ -15,6 +15,7 @@ namespace UserApplication.Models
         public int CourseId { get; set; }
         [DisplayName ("Course Name")]
         public string CourseName { get; set; }
+
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<SubjectInCourse> SubjectInCourses { get; set; }
     }

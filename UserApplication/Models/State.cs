@@ -17,14 +17,9 @@ namespace UserApplication.Models
         [DisplayName ("State Name")]
         public string StateName { get; set; }
 
-
-
-      
         public int CountryId { get; set; }
         [ForeignKey("CountryId")]    
         public virtual Country Country { get; set; }
-
-
 
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<City> Cities { get; set; }

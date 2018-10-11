@@ -15,45 +15,30 @@ namespace UserApplication.Controllers
     {
         private UserDbContext obj = new UserDbContext();
        
-
-        // Registration form
         [HttpGet]                                                 
-        public ActionResult Registration()
-        {
-            
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Registration(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                using (UserDbContext db = new UserDbContext())
-                {
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                }
-                ModelState.Clear();
-                ViewBag.Message = user.FirstName + "" + user.LastName + "" + user.Gender + "" + user.Hobbies + "" + user.Password + "" + user.Email + "" + user.DOB + "" + user.Role + "" + user.Course + "Succesfully Registered.";
-
-            }
-            return View();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
         public ActionResult Index()
         {
-            Country_Bind();
+           return View();
+        }
+        
+       /// <summary>
+       /// Registration form
+       /// </summary>
+       /// <returns></returns>
+        [HttpGet]
+        public ActionResult RegistrationForm()
+        {
+            //Dropdown for Role List
             List<Role> List = obj.Roles.ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
+
+            //Dropdown for the Course List
             List<Course> Lists = obj.Courses.ToList();
             ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
-            ViewBag.CountryList = new SelectList(obj.Countries, "CountryId", "CountryName");
-           
+
+            //Dropdown for the Country List
+            List<Country> List1 = obj.Countries.ToList();
+            ViewBag.CountryList1 = new SelectList(List1, "CountryId", "CountryName");
 
             return View();
         }
@@ -61,69 +46,94 @@ namespace UserApplication.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userValue"></param>
+        /// <param name="userViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Index(User userValue)
+        public ActionResult RegistrationForm(UserViewModel userViewModel)
         {
-           
+          
+            //Dropdown for Role List
             List<Role> List = obj.Roles.ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
+
+            //Dropdown for Course List
             List<Course> Lists = obj.Courses.ToList();
             ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
 
-           // string strDDLValue = Request.Form["Country"].ToString();
+            //Dropdown for Country List
+            List<Country> List1 = obj.Countries.ToList();
+            ViewBag.CountryList1 = new SelectList(List1, "CountryId", "CountryName");
 
-            User select = new User();
-            select.UserId = userValue.UserId;
-            select.FirstName = userValue.FirstName;
-            select.LastName = userValue.LastName;
-            select.Gender = userValue.Gender;
-            select.Hobbies = userValue.Hobbies;
-            select.Password = userValue.Password;
-            select.Email = userValue.Email;
-            select.DOB = userValue.DOB;
-            select.RoleId = userValue.RoleId;
-            select.CourseId = userValue.CourseId;
-            select.AddressLine1 = userValue.AddressLine1;
-            select.AddressLine2 = userValue.AddressLine2;
-            select.AddressId = userValue.AddressId;
+            userViewModel.AddressId = 1;
+            userViewModel.UserId = 1;
 
-            obj.Users.Add(userValue);
+            //Object of address table
+            Address address = new Address();
+            //Binding the fields of address table
+            address.AddressId = userViewModel.AddressId;
+            address.CountryId = userViewModel.CountryId;
+            address.StateId = userViewModel.StateId;
+            address.CityId = userViewModel.CityId;
+            address.Zipcode = userViewModel.Zipcode;
+
+            obj.Addresses.Add(address);
+            obj.SaveChanges();
+            int latestAddressId = address.AddressId;
+
+
+            //Object of user table 
+            User user = new User();
+            //Binding the fields of user table
+            user.UserId = userViewModel.UserId;
+            user.FirstName = userViewModel.FirstName;
+            user.LastName = userViewModel.LastName;
+            user.Gender = userViewModel.Gender;
+            user.Hobbies = userViewModel.Hobbies;
+            user.Password = userViewModel.Password;
+            user.Email = userViewModel.Email;
+            user.DOB = userViewModel.DOB;
+            user.DateCreated = userViewModel.DateCreated;
+            user.DateModified = userViewModel.DateModified;
+            user.IsActive = userViewModel.IsActive;
+            user.RoleId = userViewModel.RoleId;
+            user.CourseId = userViewModel.CourseId;
+            user.AddressLine1 = userViewModel.AddressLine1;
+            user.AddressLine2 = userViewModel.AddressLine2;
+            user.AddressId = latestAddressId;
+            
+            obj.Users.Add(user);
             obj.SaveChanges();
 
-            int latestUserId = userValue.UserId;
-
+            int latestUserId = user.UserId;
+            
             UserInRole userInRole = new UserInRole();
             userInRole.UserId = latestUserId;
-            userInRole.RoleId = userValue.RoleId;
+            userInRole.RoleId = userViewModel.RoleId;
 
             obj.UserInRoles.Add(userInRole);
             obj.SaveChanges();
 
-        
-
-            
-            return View(userValue);
+            return View(userViewModel);
         }
 
-
-        public int GetAdressId()
-        { return 0; }
-        
+       /// <summary>
+       /// Get all country
+       /// </summary>
         SqlConnection UserDbContext = new SqlConnection(ConfigurationManager.ConnectionStrings["UserDbContext"].ConnectionString);
-        //Get all country
         public DataSet Get_Country()
         {
-
-            SqlCommand com = new SqlCommand("Select * from Countries", UserDbContext);
-            SqlDataAdapter da = new SqlDataAdapter(com);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            return ds;
+           SqlCommand com = new SqlCommand("Select * from Countries", UserDbContext);
+           SqlDataAdapter da = new SqlDataAdapter(com);
+           DataSet ds = new DataSet();
+           da.Fill(ds);
+           return ds;
         }
 
-        //Get all state
+      /// <summary>
+      /// Get all state
+      /// </summary>
+      /// <param name="CountryId"></param>
+      /// <returns></returns>
         public DataSet Get_State(string CountryId)
         {
             SqlCommand com = new SqlCommand("Select * from States where CountryId=@countryid", UserDbContext);
@@ -133,7 +143,12 @@ namespace UserApplication.Controllers
             da.Fill(ds);
             return ds;
         }
-        //Get all city
+
+       /// <summary>
+       /// Get all city
+       /// </summary>
+       /// <param name="StateId"></param>
+       /// <returns></returns>
         public DataSet Get_City(string StateId)
         {
             SqlCommand com = new SqlCommand("Select * from Cities where StateId=@stateid", UserDbContext);
@@ -143,7 +158,9 @@ namespace UserApplication.Controllers
             da.Fill(ds);
             return ds;
         }
-
+        /// <summary>
+        /// Bind the country
+        /// </summary>
         public void Country_Bind()
         {
             DataSet ds = Get_Country();
@@ -156,6 +173,11 @@ namespace UserApplication.Controllers
             }
             ViewBag.Country = countrylist;
         }
+        /// <summary>
+        /// Bind the state
+        /// </summary>
+        /// <param name="CountryId"></param>
+        /// <returns></returns>
         public JsonResult State_Bind(string CountryId)
         {
             DataSet ds = Get_State(CountryId);
@@ -167,7 +189,11 @@ namespace UserApplication.Controllers
             }
             return Json(statelist, JsonRequestBehavior.AllowGet);
         }
-
+        /// <summary>
+        /// Bind the city
+        /// </summary>
+        /// <param name="StateId"></param>
+        /// <returns></returns>
         public JsonResult City_Bind(string StateId)
         {
             DataSet ds = Get_City(StateId);
@@ -179,11 +205,6 @@ namespace UserApplication.Controllers
             }
             return Json(citylist, JsonRequestBehavior.AllowGet);
         }
-        //public JsonResult GetStateById(int CountryId)
-        //{
-        //    obj.Configuration.ProxyCreationEnabled = false;
-        //    return Json(obj.States.Where(p => p.CountryId == CountryId), JsonRequestBehavior.AllowGet);
-        //}
 
     }
 }
