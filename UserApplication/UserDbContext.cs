@@ -24,6 +24,7 @@ namespace UserApplication
         public virtual DbSet<SubjectInCourse> SubjectsInCourses { get; set; }
         public virtual DbSet<TeacherInSubject> TeacherInSubjects { get; set; }
         public virtual DbSet<Subject> Subjects { get; set; }
-       
+
+        public System.Data.Entity.DbSet<UserApplication.Models.UserViewModel> UserViewModels { get; set; }
     }
 }

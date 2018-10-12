@@ -14,17 +14,17 @@ namespace UserApplication.Controllers
     public class UserController : Controller
     {
         private UserDbContext obj = new UserDbContext();
-       
-        [HttpGet]                                                 
+
+        [HttpGet]
         public ActionResult Index()
         {
-           return View();
+            return View();
         }
-        
-       /// <summary>
-       /// Registration form
-       /// </summary>
-       /// <returns></returns>
+
+        /// <summary>
+        /// Registration form
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult RegistrationForm()
         {
@@ -51,7 +51,7 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult RegistrationForm(UserViewModel userViewModel)
         {
-          
+
             //Dropdown for Role List
             List<Role> List = obj.Roles.ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
@@ -76,10 +76,9 @@ namespace UserApplication.Controllers
             address.CityId = userViewModel.CityId;
             address.Zipcode = userViewModel.Zipcode;
 
-            obj.Addresses.Add(address);
-            obj.SaveChanges();
+            obj.Addresses.Add(address);  //Insert data in address table
+            obj.SaveChanges();           //Save data in database
             int latestAddressId = address.AddressId;
-
 
             //Object of user table 
             User user = new User();
@@ -100,12 +99,12 @@ namespace UserApplication.Controllers
             user.AddressLine1 = userViewModel.AddressLine1;
             user.AddressLine2 = userViewModel.AddressLine2;
             user.AddressId = latestAddressId;
-            
-            obj.Users.Add(user);
-            obj.SaveChanges();
+
+            obj.Users.Add(user);      //Insert data in user table
+            obj.SaveChanges();         //Save data in database
 
             int latestUserId = user.UserId;
-            
+
             UserInRole userInRole = new UserInRole();
             userInRole.UserId = latestUserId;
             userInRole.RoleId = userViewModel.RoleId;
@@ -113,27 +112,28 @@ namespace UserApplication.Controllers
             obj.UserInRoles.Add(userInRole);
             obj.SaveChanges();
 
-            return View(userViewModel);
+            //return View(userViewModel);
+            return RedirectToAction("Login");
         }
 
-       /// <summary>
-       /// Get all country
-       /// </summary>
+        /// <summary>
+        /// Get all country
+        /// </summary>
         SqlConnection UserDbContext = new SqlConnection(ConfigurationManager.ConnectionStrings["UserDbContext"].ConnectionString);
         public DataSet Get_Country()
         {
-           SqlCommand com = new SqlCommand("Select * from Countries", UserDbContext);
-           SqlDataAdapter da = new SqlDataAdapter(com);
-           DataSet ds = new DataSet();
-           da.Fill(ds);
-           return ds;
+            SqlCommand com = new SqlCommand("Select * from Countries", UserDbContext);
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            return ds;
         }
 
-      /// <summary>
-      /// Get all state
-      /// </summary>
-      /// <param name="CountryId"></param>
-      /// <returns></returns>
+        /// <summary>
+        /// Get all state
+        /// </summary>
+        /// <param name="CountryId"></param>
+        /// <returns></returns>
         public DataSet Get_State(string CountryId)
         {
             SqlCommand com = new SqlCommand("Select * from States where CountryId=@countryid", UserDbContext);
@@ -144,11 +144,11 @@ namespace UserApplication.Controllers
             return ds;
         }
 
-       /// <summary>
-       /// Get all city
-       /// </summary>
-       /// <param name="StateId"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// Get all city
+        /// </summary>
+        /// <param name="StateId"></param>
+        /// <returns></returns>
         public DataSet Get_City(string StateId)
         {
             SqlCommand com = new SqlCommand("Select * from Cities where StateId=@stateid", UserDbContext);
@@ -205,6 +205,28 @@ namespace UserApplication.Controllers
             }
             return Json(citylist, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// Login form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+            var LoginDetails = obj.Users.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
+            if (LoginDetails != null)
+               if(LoginDetails.RoleId == 1)
+               {
+                    return RedirectToAction("ShowList","SuperAdmin");
+               }
+            
+            return View("Login");
+        }
 
-    }
+    } 
+    
 }
