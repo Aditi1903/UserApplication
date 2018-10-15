@@ -87,5 +87,46 @@ namespace UserApplication.Models
         [DisplayName("Is Active")]
         public bool IsActive { get; set; }
 
+        public List<RoleModel> Roles { get; set; }
+        public List<CourseModel> Courses { get; set; }
+        public List<CountryModel> Countries { get; set; }
+        public List<StateModel> States { get; set; }
+        public List<CityModel> Cities { get; set; }
+
+        public class CourseModel
+        {
+            [Key]
+            public int CourseId { get; set; }
+            public string CourseName { get; set; }
+        }
+
+        public class RoleModel
+        {
+            [Key]
+            public int RoleId { get; set; }
+            public string RoleName { get; set; }
+        }
+
+        public class CountryModel
+        {
+            [Key]
+            public int CountryId { get; set; }
+            public string CountryName { get; set; }
+        }
+
+        public class StateModel
+        {
+            [Key]
+            public int StateId { get; set; }
+            public string StateName { get; set; }
+        }
+
+        public class CityModel
+        {
+            [Key]
+            public int CityId { get; set; }
+            public string CityName { get; set; }
+        }
+
     }
 }

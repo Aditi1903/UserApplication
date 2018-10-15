@@ -221,7 +221,7 @@ namespace UserApplication.Controllers
             if (LoginDetails != null)
                if(LoginDetails.RoleId == 1)
                {
-                    return RedirectToAction("ShowList","SuperAdmin");
+                    return RedirectToAction("UserList","SuperAdmin");
                }
             
             return View("Login");
