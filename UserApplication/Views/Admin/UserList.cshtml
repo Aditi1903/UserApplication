@@ -7,13 +7,13 @@
 <h2>UserList</h2>
 
 <p>
-    @Html.ActionLink("Create New User", "CreateUser")
+    @Html.ActionLink("Create New", "CreateUser")
 </p>
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Address.AddressId)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Course.CourseName)
         </th>
@@ -61,9 +61,9 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Address.AddressId)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Course.CourseName)
         </td>

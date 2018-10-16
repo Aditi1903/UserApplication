@@ -8,144 +8,28 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using UserApplication.Models;
-using static UserApplication.Models.UserViewModel;
 
 namespace UserApplication.Controllers
 {
-    public class SuperAdminController : Controller
+    public class AdminController : Controller
     {
         private UserDbContext obj = new UserDbContext();
-        // GET: SuperAdmin
+        // GET: Admin
         public ActionResult Index()
         {
             return View();
         }
-        /// <summary>
-        /// Display list of all users
-        /// </summary>
-        /// <returns></returns>
         public ActionResult UserList()
         {
-            var list = obj.Users.ToList();
+            //var list = obj.Users.Where(u =>u.RoleId == 2 && u.RoleId == 3 && u.RoleId == 4).ToList();
+            //return View(list);
+            var list = obj.Users.Where(u => u.RoleId != 1).ToList();
             return View(list);
         }
-        //[HttpGet]
-        //public ActionResult CreateUser()
-        //{
-        //    UserViewModel model = new UserViewModel();
-        //    var courseList = obj.Courses.Select(x => new CourseModel
-        //    {
-        //        CourseName = x.CourseName,
-        //        CourseId = x.CourseId
-        //    }).ToList();
-
-        //    var roleList = obj.Roles.Select(x => new RoleModel
-        //    {
-        //        RoleName = x.RoleName,
-        //        RoleId = x.RoleId
-        //    }).ToList();
-
-        //    model.Roles = roleList;
-        //    model.Courses = courseList;
-
-        //    var countryList = obj.Countries.Select(x => new CountryModel
-        //    {
-        //        CountryName = x.CountryName,
-        //        CountryId = x.CountryId
-        //    }).ToList();
-
-        //    model.Countries = countryList;
-
-        //    var stateList = obj.States.Select(x => new StateModel
-        //    {
-        //        StateName = x.StateName,
-        //        StateId = x.StateId
-        //    }).ToList();
-
-        //    model.States = stateList;
-
-        //    var cityList = obj.Cities.Select(x => new CityModel
-        //    {
-        //        CityName = x.CityName,
-        //        CityId = x.CityId
-        //    }).ToList();
-
-        //    model.Cities = cityList;
-
-        //    return View(model);
-        //}
-        //[HttpPost]
-        //public ActionResult CreateUser(UserViewModel objUserViewModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(objUserViewModel);
-        //    }
-        //    using (var transaction = obj.Database.BeginTransaction())
-        //    {
-        //        try
-        //        {
-        //            Address objAddress = new Address
-        //            {
-        //                CountryId = objUserViewModel.CountryId,
-        //                StateId = objUserViewModel.StateId,
-        //                CityId = objUserViewModel.CityId,
-        //                Zipcode = objUserViewModel.Zipcode,
-        //            };
-        //            obj.Addresses.Add(objAddress);
-        //            obj.SaveChanges();
-
-        //            User objUser = new User
-        //            {
-        //                UserId = objUserViewModel.UserId,
-        //                FirstName = objUserViewModel.FirstName,
-        //                LastName = objUserViewModel.LastName,
-        //                Gender = objUserViewModel.Gender,
-        //                DOB = objUserViewModel.DOB,
-        //                Hobbies = objUserViewModel.Hobbies,
-        //                Email = objUserViewModel.Email,
-        //                Password = objUserViewModel.Password,
-        //                AddressLine1 = objUserViewModel.AddressLine1,
-        //                AddressLine2 = objUserViewModel.AddressLine2,
-        //                IsActive = objUserViewModel.IsActive,
-        //                DateCreated = objUserViewModel.DateCreated,
-        //                DateModified = objUserViewModel.DateModified,
-        //                CourseId = objUserViewModel.CourseId,
-        //                RoleId = objUserViewModel.RoleId,
-
-        //                AddressId = objAddress.AddressId,
-        //            };
-
-        //            obj.Users.Add(objUser);
-        //            obj.SaveChanges();
-
-        //            UserInRole objUserInRole = new UserInRole
-        //            {
-        //                RoleId = objUserViewModel.RoleId,
-        //                UserId = objUser.UserId
-        //            };
-        //            obj.UserInRoles.Add(objUserInRole);
-        //            obj.SaveChanges();
-
-        //            transaction.Commit();
-
-        //            ViewBag.ResultMessage = objUserViewModel.FirstName + "" + objUserViewModel.LastName + "" + "is successfully registered.";
-        //            ModelState.Clear();
-        //        }
-
-        //        catch(Exception)
-        //        {
-        //            transaction.Rollback();
-        //            ViewBag.ResultMessage = "Error occurred in the registration process.Please register again.";
-        //        }
-        //    }
-        //         return RedirectToAction("Login");
-        //}
         /// <summary>
-        /// GET:Super Admin can create user
+        /// GET:Admin can create user
         /// </summary>
         /// <returns></returns>
-
         [HttpGet]
         public ActionResult CreateUser()
         {
@@ -165,7 +49,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// POST:Super Admin can create user
+        /// POST:Admin can create user
         /// </summary>
         /// <param name="userViewModel"></param>
         /// <returns></returns>
@@ -185,8 +69,8 @@ namespace UserApplication.Controllers
             List<Country> List1 = obj.Countries.ToList();
             ViewBag.CountryList1 = new SelectList(List1, "CountryId", "CountryName");
 
-            //userViewModel.AddressId = 1;
-            //userViewModel.UserId = 1;
+            userViewModel.AddressId = 1;
+            userViewModel.UserId = 1;
 
             //Object of address table
             Address address = new Address();
@@ -233,7 +117,7 @@ namespace UserApplication.Controllers
             obj.UserInRoles.Add(userInRole);
             obj.SaveChanges();
 
-           return RedirectToAction("UserList");
+            return RedirectToAction("UserList");
         }
         /// <summary>
         /// Get all country
@@ -325,7 +209,7 @@ namespace UserApplication.Controllers
             return Json(citylist, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
-        /// GET:Super Admin can edit the user details
+        ///  GET:Admin can edit the user details
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -374,7 +258,7 @@ namespace UserApplication.Controllers
             return View(objUserViewModel);
         }
         /// <summary>
-        ///  POST:Super Admin can edit the user details
+        ///  POST:Admin can edit the user details
         /// </summary>
         /// <param name="id"></param>
         /// <param name="objUserViewModel"></param>
@@ -409,10 +293,10 @@ namespace UserApplication.Controllers
                     objUser.AddressLine2 = objUserViewModel.AddressLine2;
                     //objUser.Address.CountryId = objUserViewModel.CountryId;
                     //objUser.Address.StateId = objUserViewModel.StateId;
-                   // objUser.Address.CityId = objUserViewModel.CityId;
+                    // objUser.Address.CityId = objUserViewModel.CityId;
                     objUser.Address.Zipcode = objUserViewModel.Zipcode;
 
-                  //  obj.Users.Add(objUser);
+                    //  obj.Users.Add(objUser);
                     obj.SaveChanges();
                     return RedirectToAction("UserList");
 
@@ -425,73 +309,7 @@ namespace UserApplication.Controllers
             }
         }
         /// <summary>
-        /// GET:Super Admin can remove user
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult DeleteUser(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User objUser = obj.Users.Find(id);
-            UserViewModel objUserViewModel = new UserViewModel();
-
-            objUserViewModel.FirstName = objUser.FirstName;
-            objUserViewModel.LastName = objUser.LastName;
-            objUserViewModel.Gender = objUser.Gender;
-            objUserViewModel.Hobbies = objUser.Hobbies;
-            objUserViewModel.Email = objUser.Email;
-            objUserViewModel.Password = objUser.Password;
-            objUserViewModel.DOB = objUser.DOB;
-            objUserViewModel.RoleId = objUser.RoleId;
-            objUserViewModel.CourseId = objUser.CourseId;
-            objUserViewModel.IsActive = objUser.IsActive;
-            objUserViewModel.DateCreated = objUser.DateCreated;
-            objUserViewModel.DateModified = objUser.DateModified;
-            objUserViewModel.AddressLine1 = objUser.AddressLine1;
-            objUserViewModel.AddressLine2 = objUser.AddressLine2;
-            objUserViewModel.CountryId = objUser.Address.CountryId;
-            objUserViewModel.StateId = objUser.Address.StateId;
-            objUserViewModel.CityId = objUser.Address.CityId;
-            objUserViewModel.Zipcode = objUser.Address.Zipcode;
-
-            if (objUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(objUserViewModel);
-        }
-        /// <summary>
-        /// POST:Super Admin can remove user
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult DeleteUser(int id)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    User objUser = obj.Users.Find(id);
-                    obj.Users.Remove(objUser);
-                    obj.SaveChanges();
-                }
-
-                return RedirectToAction("UserList");
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-            
-        }
-        /// <summary>
-        /// Super Admin can see the details of user
+        /// Admin can see the details of user
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -534,17 +352,73 @@ namespace UserApplication.Controllers
                 return View(objUserViewModel);
             }
         }
+        /// <summary>
+        /// GET:Admin can remove user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteUser(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User objUser = obj.Users.Find(id);
+            UserViewModel objUserViewModel = new UserViewModel();
+
+            objUserViewModel.FirstName = objUser.FirstName;
+            objUserViewModel.LastName = objUser.LastName;
+            objUserViewModel.Gender = objUser.Gender;
+            objUserViewModel.Hobbies = objUser.Hobbies;
+            objUserViewModel.Email = objUser.Email;
+            objUserViewModel.Password = objUser.Password;
+            objUserViewModel.DOB = objUser.DOB;
+            objUserViewModel.RoleId = objUser.RoleId;
+            objUserViewModel.CourseId = objUser.CourseId;
+            objUserViewModel.IsActive = objUser.IsActive;
+            objUserViewModel.DateCreated = objUser.DateCreated;
+            objUserViewModel.DateModified = objUser.DateModified;
+            objUserViewModel.AddressLine1 = objUser.AddressLine1;
+            objUserViewModel.AddressLine2 = objUser.AddressLine2;
+            objUserViewModel.CountryId = objUser.Address.CountryId;
+            objUserViewModel.StateId = objUser.Address.StateId;
+            objUserViewModel.CityId = objUser.Address.CityId;
+            objUserViewModel.Zipcode = objUser.Address.Zipcode;
+
+            if (objUser == null)
+            {
+                return HttpNotFound();
+            }
+            return View(objUserViewModel);
+        }
+        /// <summary>
+        /// POST:Admin can remove user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteUser(int id)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    User objUser = obj.Users.Find(id);
+                    obj.Users.Remove(objUser);
+                    obj.SaveChanges();
+                }
+
+                return RedirectToAction("UserList");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
 
     }
 }
-
-
-
-
-
-        
-
-
-
-
-
