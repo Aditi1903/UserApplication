@@ -19,22 +19,26 @@ namespace UserApplication.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// Admin can see the list of Teachers and Students
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UserList()
         {
             //var list = obj.Users.Where(u =>u.RoleId == 2 && u.RoleId == 3 && u.RoleId == 4).ToList();
             //return View(list);
-            var list = obj.Users.Where(u => u.RoleId != 1).ToList();
+            var list = obj.Users.Where(u => u.RoleId != 1 && u.RoleId!=2).ToList();
             return View(list);
         }
         /// <summary>
-        /// GET:Admin can create user
+        /// GET:Admin can create teachers and students
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public ActionResult CreateUser()
         {
             //Dropdown for Role List
-            List<Role> List = obj.Roles.ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for the Course List
@@ -49,7 +53,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// POST:Admin can create user
+        /// POST:Admin can create teachers and students
         /// </summary>
         /// <param name="userViewModel"></param>
         /// <returns></returns>
@@ -58,7 +62,7 @@ namespace UserApplication.Controllers
         {
 
             //Dropdown for Role List
-            List<Role> List = obj.Roles.ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for Course List
@@ -87,7 +91,7 @@ namespace UserApplication.Controllers
 
             //Object of user table 
             User user = new User();
-            //Binding the fields of user table
+            //Binding the fields 
             user.UserId = userViewModel.UserId;
             user.FirstName = userViewModel.FirstName;
             user.LastName = userViewModel.LastName;
@@ -120,7 +124,7 @@ namespace UserApplication.Controllers
             return RedirectToAction("UserList");
         }
         /// <summary>
-        /// Get all country
+        /// Get all countries
         /// </summary>
         SqlConnection UserDbContext = new SqlConnection(ConfigurationManager.ConnectionStrings["UserDbContext"].ConnectionString);
         public DataSet Get_Country()
@@ -133,7 +137,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// Get all state
+        /// Get all states
         /// </summary>
         /// <param name="CountryId"></param>
         /// <returns></returns>
@@ -148,7 +152,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// Get all city
+        /// Get all cities
         /// </summary>
         /// <param name="StateId"></param>
         /// <returns></returns>
@@ -172,7 +176,6 @@ namespace UserApplication.Controllers
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 countrylist.Add(new SelectListItem { Text = dr["CountryName"].ToString(), Value = dr["CountryId"].ToString() });
-
             }
             ViewBag.Country = countrylist;
         }
@@ -209,7 +212,7 @@ namespace UserApplication.Controllers
             return Json(citylist, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
-        ///  GET:Admin can edit the user details
+        ///  GET:Admin can edit the teacher and student details
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -258,7 +261,7 @@ namespace UserApplication.Controllers
             return View(objUserViewModel);
         }
         /// <summary>
-        ///  POST:Admin can edit the user details
+        ///  POST:Admin can edit the teacher and student details
         /// </summary>
         /// <param name="id"></param>
         /// <param name="objUserViewModel"></param>
@@ -297,7 +300,7 @@ namespace UserApplication.Controllers
                     objUser.Address.Zipcode = objUserViewModel.Zipcode;
 
                     //  obj.Users.Add(objUser);
-                    obj.SaveChanges();
+                    obj.SaveChanges();    // //Save data in database
                     return RedirectToAction("UserList");
 
                 }
@@ -309,7 +312,7 @@ namespace UserApplication.Controllers
             }
         }
         /// <summary>
-        /// Admin can see the details of user
+        /// Admin can see the details of teacher and student
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -353,7 +356,7 @@ namespace UserApplication.Controllers
             }
         }
         /// <summary>
-        /// GET:Admin can remove user
+        /// GET:Admin can remove teacher and student
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -393,7 +396,7 @@ namespace UserApplication.Controllers
             return View(objUserViewModel);
         }
         /// <summary>
-        /// POST:Admin can remove user
+        /// POST:Admin can remove teacher and student
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

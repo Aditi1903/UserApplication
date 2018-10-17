@@ -145,12 +145,11 @@ namespace UserApplication.Controllers
         /// GET:Super Admin can create user
         /// </summary>
         /// <returns></returns>
-
         [HttpGet]
         public ActionResult CreateUser()
         {
             //Dropdown for Role List
-            List<Role> List = obj.Roles.ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for the Course List
@@ -163,7 +162,6 @@ namespace UserApplication.Controllers
 
             return View();
         }
-
         /// <summary>
         /// POST:Super Admin can create user
         /// </summary>
@@ -174,7 +172,7 @@ namespace UserApplication.Controllers
         {
 
             //Dropdown for Role List
-            List<Role> List = obj.Roles.ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for Course List
@@ -184,9 +182,6 @@ namespace UserApplication.Controllers
             //Dropdown for Country List
             List<Country> List1 = obj.Countries.ToList();
             ViewBag.CountryList1 = new SelectList(List1, "CountryId", "CountryName");
-
-            //userViewModel.AddressId = 1;
-            //userViewModel.UserId = 1;
 
             //Object of address table
             Address address = new Address();
@@ -203,7 +198,7 @@ namespace UserApplication.Controllers
 
             //Object of user table 
             User user = new User();
-            //Binding the fields of user table
+            //Binding the fields 
             user.UserId = userViewModel.UserId;
             user.FirstName = userViewModel.FirstName;
             user.LastName = userViewModel.LastName;
@@ -236,7 +231,7 @@ namespace UserApplication.Controllers
            return RedirectToAction("UserList");
         }
         /// <summary>
-        /// Get all country
+        /// Get all countries
         /// </summary>
         SqlConnection UserDbContext = new SqlConnection(ConfigurationManager.ConnectionStrings["UserDbContext"].ConnectionString);
         public DataSet Get_Country()
@@ -249,7 +244,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// Get all state
+        /// Get all states
         /// </summary>
         /// <param name="CountryId"></param>
         /// <returns></returns>
@@ -264,7 +259,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// Get all city
+        /// Get all cities
         /// </summary>
         /// <param name="StateId"></param>
         /// <returns></returns>
@@ -344,8 +339,9 @@ namespace UserApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            //Object of user table
             User objUser = obj.Users.Find(id);
+            //Object of user view model table
             UserViewModel objUserViewModel = new UserViewModel();
 
             objUserViewModel.FirstName = objUser.FirstName;
@@ -409,11 +405,10 @@ namespace UserApplication.Controllers
                     objUser.AddressLine2 = objUserViewModel.AddressLine2;
                     //objUser.Address.CountryId = objUserViewModel.CountryId;
                     //objUser.Address.StateId = objUserViewModel.StateId;
-                   // objUser.Address.CityId = objUserViewModel.CityId;
+                    // objUser.Address.CityId = objUserViewModel.CityId;
                     objUser.Address.Zipcode = objUserViewModel.Zipcode;
 
-                  //  obj.Users.Add(objUser);
-                    obj.SaveChanges();
+                    obj.SaveChanges();  //Save data in database
                     return RedirectToAction("UserList");
 
                 }
@@ -488,7 +483,6 @@ namespace UserApplication.Controllers
 
                 throw ex;
             }
-            
         }
         /// <summary>
         /// Super Admin can see the details of user
@@ -526,7 +520,6 @@ namespace UserApplication.Controllers
                 objUserViewModel.CityId = user.Address.CityId;
                 objUserViewModel.Zipcode = user.Address.Zipcode;
 
-
                 if (user == null)
                 {
                     return HttpNotFound();
@@ -534,7 +527,6 @@ namespace UserApplication.Controllers
                 return View(objUserViewModel);
             }
         }
-
     }
 }
 

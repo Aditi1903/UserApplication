@@ -29,7 +29,7 @@ namespace UserApplication.Controllers
         public ActionResult RegistrationForm()
         {
             //Dropdown for Role List
-            List<Role> List = obj.Roles.ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for the Course List
@@ -44,7 +44,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Registration Form
         /// </summary>
         /// <param name="userViewModel"></param>
         /// <returns></returns>
@@ -53,7 +53,7 @@ namespace UserApplication.Controllers
         {
 
             //Dropdown for Role List
-            List<Role> List = obj.Roles.ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for Course List
@@ -112,12 +112,11 @@ namespace UserApplication.Controllers
             obj.UserInRoles.Add(userInRole);
             obj.SaveChanges();
 
-            //return View(userViewModel);
             return RedirectToAction("Login");
         }
 
         /// <summary>
-        /// Get all country
+        /// Get all countries
         /// </summary>
         SqlConnection UserDbContext = new SqlConnection(ConfigurationManager.ConnectionStrings["UserDbContext"].ConnectionString);
         public DataSet Get_Country()
@@ -130,7 +129,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// Get all state
+        /// Get all states
         /// </summary>
         /// <param name="CountryId"></param>
         /// <returns></returns>
@@ -145,7 +144,7 @@ namespace UserApplication.Controllers
         }
 
         /// <summary>
-        /// Get all city
+        /// Get all cities
         /// </summary>
         /// <param name="StateId"></param>
         /// <returns></returns>
@@ -206,7 +205,7 @@ namespace UserApplication.Controllers
             return Json(citylist, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
-        /// Login form
+        /// GET:Login form
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -214,19 +213,43 @@ namespace UserApplication.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// POST:Login form
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Login(User user)
         {
             var LoginDetails = obj.Users.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
             if (LoginDetails != null)
-               if(LoginDetails.RoleId == 1)
-               {
-                    return RedirectToAction("UserList","SuperAdmin");
-               }
-            
+                if (LoginDetails.RoleId == 1)
+                {
+                    return RedirectToAction("UserList", "SuperAdmin");
+                }
+                else if (LoginDetails.RoleId == 2)
+                {
+                    return RedirectToAction("UserList", "Admin");
+                }
+                else if (LoginDetails.RoleId == 3)
+                {
+                    return RedirectToAction("UserList", "Teacher");
+                }
+                else
+                {
+                    return RedirectToAction("TeachersCourse", "Student");
+                }
+
             return View("Login");
         }
-
-    } 
-    
+        public ActionResult LogOut()
+        {
+            return RedirectToAction("Login");
+        }
+    }
 }
+
+        
+
+    
+    
