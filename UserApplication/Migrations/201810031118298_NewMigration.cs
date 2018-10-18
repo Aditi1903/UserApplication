@@ -155,7 +155,7 @@ namespace UserApplication.Migrations
                     })
                 .PrimaryKey(t => t.UserInRoleId)
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: false)
+                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
             

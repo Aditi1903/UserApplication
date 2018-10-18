@@ -237,7 +237,7 @@ namespace UserApplication.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("TeachersCourse", "Student");
+                    return RedirectToAction("StudentList", "Student");
                 }
 
             return View("Login");

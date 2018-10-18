@@ -26,8 +26,8 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-            var list = obj.Users.ToList();
-            return View(list);
+            var listOfUsers = obj.Users.ToList();
+            return View(listOfUsers);
         }
         //[HttpGet]
         //public ActionResult CreateUser()

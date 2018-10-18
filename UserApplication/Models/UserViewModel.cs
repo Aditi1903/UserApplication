@@ -46,7 +46,7 @@ namespace UserApplication.Models
         [Required(ErrorMessage = "Please select the course")]
         [DisplayName("Course")]
         public int CourseId { get; set; }
-       
+
         [Required(ErrorMessage = "Enter your permanent address")]
         [DisplayName("Permanent Address")]
         public string AddressLine1 { get; set; }
@@ -58,19 +58,19 @@ namespace UserApplication.Models
         [Required(ErrorMessage = "This field cannot be null")]
         [DisplayName("Address")]
         public int AddressId { get; set; }
-       
+
         [DisplayName("Country Name")]
         [Required(ErrorMessage = "Please select your Country")]
         public int CountryId { get; set; }
-        
+
         [DisplayName("State Name")]
         [Required(ErrorMessage = "Please select your State")]
         public int StateId { get; set; }
-       
+
         [DisplayName("City Name")]
         [Required(ErrorMessage = "Please select your City name")]
         public int CityId { get; set; }
-       
+
         [DisplayName("Zip code")]
         [Required(ErrorMessage = "Please enter Zipcode")]
         public int Zipcode { get; set; }
@@ -86,47 +86,8 @@ namespace UserApplication.Models
         [Required]
         [DisplayName("Is Active")]
         public bool IsActive { get; set; }
-
-        public List<RoleModel> Roles { get; set; }
-        public List<CourseModel> Courses { get; set; }
-        public List<CountryModel> Countries { get; set; }
-        public List<StateModel> States { get; set; }
-        public List<CityModel> Cities { get; set; }
-
-        public class CourseModel
-        {
-            [Key]
-            public int CourseId { get; set; }
-            public string CourseName { get; set; }
-        }
-
-        public class RoleModel
-        {
-            [Key]
-            public int RoleId { get; set; }
-            public string RoleName { get; set; }
-        }
-
-        public class CountryModel
-        {
-            [Key]
-            public int CountryId { get; set; }
-            public string CountryName { get; set; }
-        }
-
-        public class StateModel
-        {
-            [Key]
-            public int StateId { get; set; }
-            public string StateName { get; set; }
-        }
-
-        public class CityModel
-        {
-            [Key]
-            public int CityId { get; set; }
-            public string CityName { get; set; }
-        }
-
     }
 }
+
+       
+    

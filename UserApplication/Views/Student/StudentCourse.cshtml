@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<UserApplication.Models.User>
 
 @{
-    ViewBag.Title = "TeachersCourse";
+    ViewBag.Title = "StudentCourse";
 }
 
-<h2>Teacher's Course</h2>
+<h2>Courses of student</h2>
 
 <p>
     @Html.ActionLink(" ", " ")
@@ -15,10 +15,10 @@
             @Html.DisplayNameFor(model => model.Address.AddressId)
         </th>*@
         <th>
-         @Html.DisplayNameFor(model => model.FirstName)
+           @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
-           @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
            @Html.DisplayNameFor(model => model.Role.RoleName)
@@ -65,20 +65,16 @@
             @Html.DisplayFor(modelItem => item.Address.AddressId)
         </td>*@
         <td>
-            
-            @Html.DisplayFor(modelItem => item.FirstName)
+           @Html.DisplayFor(modelItem => item.FirstName)
         </td>
         <td>
-           
-            @Html.DisplayFor(modelItem => item.LastName)
+             @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
-           
-            @Html.DisplayFor(modelItem => item.Role.RoleName)
+           @Html.DisplayFor(modelItem => item.Role.RoleName)
         </td>
         <td>
-           
-            @Html.DisplayFor(modelItem => item.Course.CourseName)
+           @Html.DisplayFor(modelItem => item.Course.CourseName)
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.Gender)
@@ -111,7 +107,8 @@
             @Html.DisplayFor(modelItem => item.IsActive)
         </td>*@
         <td>
-            @Html.ActionLink("Subject List", "TeachersSubject", new { id=item.UserId }) 
+
+            @Html.ActionLink("Subjects In Course", "SubjectsInCourse", new { id=item.UserId }) |
             @*@Html.ActionLink("Details", "Details", new { id=item.UserId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.UserId })*@
         </td>

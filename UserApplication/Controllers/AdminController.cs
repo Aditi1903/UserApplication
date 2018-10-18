@@ -27,8 +27,8 @@ namespace UserApplication.Controllers
         {
             //var list = obj.Users.Where(u =>u.RoleId == 2 && u.RoleId == 3 && u.RoleId == 4).ToList();
             //return View(list);
-            var list = obj.Users.Where(u => u.RoleId != 1 && u.RoleId!=2).ToList();
-            return View(list);
+            var listOfUser = obj.Users.Where(u => u.RoleId != 1 && u.RoleId!=2).ToList();
+            return View(listOfUser);
         }
         /// <summary>
         /// GET:Admin can create teachers and students
@@ -416,8 +416,7 @@ namespace UserApplication.Controllers
             }
             catch (Exception ex)
             {
-
-                throw ex;
+              throw ex;
             }
 
         }

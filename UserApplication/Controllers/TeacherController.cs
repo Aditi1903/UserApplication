@@ -22,8 +22,8 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-            var list = obj.Users.Where(u => u.RoleId != 1 && u.RoleId!=2 && u.RoleId!=3).ToList();
-            return View(list);
+            var listOfStudent = obj.Users.Where(u => u.RoleId != 1 && u.RoleId!=2 && u.RoleId!=3).ToList();
+            return View(listOfStudent);
         }
         /// <summary>
         /// Teacher can view the details of students
