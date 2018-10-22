@@ -66,6 +66,7 @@
         </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Course.CourseName)
+            
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Role.RoleName)
@@ -107,9 +108,14 @@
             @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditUser", new { id=item.UserId }) |
-            @Html.ActionLink("Details", "UserDetails", new { id=item.UserId }) |
-            @Html.ActionLink("Delete", "DeleteUser", new { id=item.UserId })
+            @Html.ActionLink("Edit", "EditUser", new { id = item.UserId })
+            @Html.ActionLink("Details", "UserDetails", new { id = item.UserId })
+            @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })
+            @if (item.Role.RoleName != "Student")
+            {
+                @Html.ActionLink("Assign Subject", "AssignSubject", new { id = item.UserId })
+
+            }
         </td>
     </tr>
 }

@@ -16,6 +16,10 @@ namespace UserApplication.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// Student List
+        /// </summary>
+        /// <returns></returns>
 
         public ActionResult StudentList()
         {
@@ -50,6 +54,11 @@ namespace UserApplication.Controllers
             var listOfSubjectsInCourse = obj.SubjectsInCourses.ToList();
             return View(listOfSubjectsInCourse);
         }
+        /// <summary>
+        /// Student details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult StudentDetail(int? id)
         {
             {

@@ -37,6 +37,9 @@ namespace UserApplication.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter valid DOB")]
+        //[Display(Name = "DOB")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}"/*, ApplyFormatInEditMode = true*/)]
         public DateTime DOB { get; set; }
 
         [Required(ErrorMessage = "Please select the course")]
@@ -86,6 +89,9 @@ namespace UserApplication.Models
         [Required]
         [DisplayName("Is Active")]
         public bool IsActive { get; set; }
+
+       
+        public int SubjectId { get; set; }
     }
 }
 

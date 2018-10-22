@@ -420,7 +420,37 @@ namespace UserApplication.Controllers
             }
 
         }
+        [HttpGet]
+       public ActionResult AssignSubject()
+       {
+            List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
+            ViewBag.TeacherList = new SelectList(List, "RoleId", "FirstName");
 
+            List<Subject> Lists = obj.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
+           
+           return View();
+       }
+        [HttpPost]
+        public ActionResult AssignSubject(UserViewModel objUserViewModel)
+        {
+            List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
+            ViewBag.TeacherList = new SelectList(List, "RoleId", "FirstName");
+
+            List<Subject> Lists = obj.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
+
+            TeacherInSubject objTeacherInSubject = new TeacherInSubject();
+            objTeacherInSubject.UserId = objUserViewModel.UserId;
+            objTeacherInSubject.SubjectId = objUserViewModel.SubjectId;
+
+            obj.TeacherInSubjects.Add(objTeacherInSubject);  //Insert data 
+            obj.SaveChanges();           //Save data in database
+
+            return RedirectToAction("UserList");
+        }
+         
+       
 
     }
 }
