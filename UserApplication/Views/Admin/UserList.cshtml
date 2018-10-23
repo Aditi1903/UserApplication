@@ -2,12 +2,14 @@
 
 @{
     ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
 
 <h2>Student and Teacher List</h2>
 
 <p>
    @Html.Partial("_CreateButtonPartial")
+   @Html.ActionLink("Create Course","CreateCourse")
 </p>
 <table class="table">
     <tr>

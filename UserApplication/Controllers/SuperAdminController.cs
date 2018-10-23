@@ -26,15 +26,26 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-            var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
-            return View(listOfUsers);
+             var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
+             return View(listOfUsers);
+          
+        }
+        public ActionResult TeacherList()
+        {
+            var teacherList = obj.Users.Where(u => u.RoleId == 3).ToList();
+            return View("teacherList");
+        }
+        public ActionResult StudentList()
+        {
+            var studentList = obj.Users.Where(u => u.RoleId == 4).ToList();
+            return View("studentList");
         }
                /// <summary>
         /// GET:Super Admin can create user
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CreateUser()
+        public ActionResult CreateUser()    
         {
             //Dropdown for Role List
             List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
@@ -223,6 +234,15 @@ namespace UserApplication.Controllers
             List<Course> Lists = obj.Courses.ToList();
             ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
 
+            List<Country> CountryList = obj.Countries.ToList();
+            ViewBag.CountryLists = new SelectList(CountryList, "CountryId", "CountryName");
+
+            List<State> StateList = obj.States.ToList();
+            ViewBag.StateLists = new SelectList(StateList, "StateId", "StateName");
+
+            List<City> CityList = obj.Cities.ToList();
+            ViewBag.CityLists = new SelectList(CityList, "CityId", "CityName");
+
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -291,9 +311,9 @@ namespace UserApplication.Controllers
                     objUser.DateModified = objUserViewModel.DateModified;
                     objUser.AddressLine1 = objUserViewModel.AddressLine1;
                     objUser.AddressLine2 = objUserViewModel.AddressLine2;
-                    //objUser.Address.CountryId = objUserViewModel.CountryId;
-                    //objUser.Address.StateId = objUserViewModel.StateId;
-                    // objUser.Address.CityId = objUserViewModel.CityId;
+                    objUser.Address.CountryId = objUserViewModel.CountryId;
+                    objUser.Address.StateId = objUserViewModel.StateId;
+                    objUser.Address.CityId = objUserViewModel.CityId;
                     objUser.Address.Zipcode = objUserViewModel.Zipcode;
 
                     obj.SaveChanges();  //Save data in database
@@ -414,6 +434,24 @@ namespace UserApplication.Controllers
                 }
                 return View(objUserViewModel);
             }
+        }
+        [HttpGet]
+        public ActionResult CreateCourse()
+        {
+            return View();
+        }
+        /// <summary>
+        /// POST : Admin can create course
+        /// </summary>
+        /// <param name="objCourse"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateCourse(Course objCourse)
+        {
+            obj.Courses.Add(objCourse);      //Insert data 
+            obj.SaveChanges();               //Save data
+
+            return RedirectToAction("UserList");
         }
     }
 }

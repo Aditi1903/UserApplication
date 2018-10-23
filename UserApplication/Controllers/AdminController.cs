@@ -418,8 +418,11 @@ namespace UserApplication.Controllers
             {
               throw ex;
             }
-
         }
+        /// <summary>
+        /// GET:Admin can assign subjects to teachers
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
        public ActionResult AssignSubject()
        {
@@ -431,8 +434,13 @@ namespace UserApplication.Controllers
            
            return View();
        }
+        /// <summary>
+        ///POST: Admin can assign subjects to teachers
+        /// </summary>
+        /// <param name="objUserViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult AssignSubject(UserViewModel objUserViewModel)
+        public ActionResult AssignSubject(TeacherInSubject objTeacherInSubject)
         {
             List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
             ViewBag.TeacherList = new SelectList(List, "RoleId", "FirstName");
@@ -440,17 +448,59 @@ namespace UserApplication.Controllers
             List<Subject> Lists = obj.Subjects.ToList();
             ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
 
-            TeacherInSubject objTeacherInSubject = new TeacherInSubject();
-            objTeacherInSubject.UserId = objUserViewModel.UserId;
-            objTeacherInSubject.SubjectId = objUserViewModel.SubjectId;
+            //TeacherInSubject objTeacherInSubject = new TeacherInSubject();
+            //objTeacherInSubject.UserId = objUserViewModel.UserId;
+            //objTeacherInSubject.SubjectId = objUserViewModel.SubjectId;
 
             obj.TeacherInSubjects.Add(objTeacherInSubject);  //Insert data 
             obj.SaveChanges();           //Save data in database
 
             return RedirectToAction("UserList");
         }
-         
+        /// <summary>
+        /// GET:Admin can create course
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateCourse()
+        {
+            return View();
+        }
+        /// <summary>
+        /// POST : Admin can create course
+        /// </summary>
+        /// <param name="objCourse"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateCourse(Course objCourse)
+        {
+             obj.Courses.Add(objCourse);      //Insert data 
+            obj.SaveChanges();               //Save data
+
+            return RedirectToAction("CreateSubjectForCourse");
+        }
+        [HttpGet]
+        public ActionResult CreateSubjectForCourse()
+        {
+            List<Course> List = obj.Courses.ToList();
+            ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateSubjectForCourse(SubjectInCourse objSubjectInCourse)
+        {
+            List<Course> List = obj.Courses.ToList();
+            ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName");
+
+            obj.SubjectsInCourses.Add(objSubjectInCourse);
+            obj.SaveChanges();
+
+            return View("UserList");
+        }
        
+
+
+
 
     }
 }

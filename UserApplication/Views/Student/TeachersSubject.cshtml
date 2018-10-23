@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "TeachersSubject";
+    Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
 
 <h2>TeachersSubject</h2>
@@ -12,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-          @Html.DisplayNameFor(model => model.User.FirstName)
+            @Html.DisplayNameFor(model => model.User.FirstName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Subject.SubjectName)
@@ -20,21 +21,23 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-          @Html.DisplayFor(modelItem => item.User.FirstName)
-        </td>
-        <td>
-           @Html.DisplayFor(modelItem => item.Subject.SubjectName)
-        </td>
-        <td>
-            @Html.ActionLink("Courses of student", "StudentCourse", new { id = item.UserId })
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.TeacherInSubjectId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TeacherInSubjectId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TeacherInSubjectId })*@
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject.SubjectName)
+            </td>
+            <td>
+                @Html.ActionLink("Courses of student", "StudentCourse", new { id = item.UserId })
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.TeacherInSubjectId }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.TeacherInSubjectId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.TeacherInSubjectId })*@
+            </td>
+        </tr>
+    }
 
 </table>
+<p>@Html.ActionLink("Back to List", "StudentList")</p>

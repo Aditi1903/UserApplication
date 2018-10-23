@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "UserDetails";
+    Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
 
 <h2>User Details</h2>
@@ -98,13 +99,13 @@
             @Html.DisplayFor(model => model.AddressLine2)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.AddressId)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.AddressId)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.CountryId)
@@ -146,13 +147,13 @@
             @Html.DisplayFor(model => model.DateCreated)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.DateModified)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.DateModified)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.IsActive)
@@ -165,6 +166,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink(" ", " ", new { id = Model.UserId }) 
-    @Html.ActionLink("Back to List", "UserList")
+    @Html.ActionLink(" ", " ", new { id = Model.UserId })
+    @Html.ActionLink("Back to List", "UserList") |
+   
 </p>

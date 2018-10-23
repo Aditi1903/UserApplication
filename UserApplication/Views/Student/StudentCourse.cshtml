@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "StudentCourse";
+    Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
 
 <h2>Courses of student</h2>
@@ -108,7 +109,7 @@
         </td>*@
         <td>
 
-            @Html.ActionLink("Subjects In Course", "SubjectsInCourse", new { id=item.UserId }) |
+            @Html.ActionLink("Subjects In Course", "SubjectsInCourse", new { id=item.UserId }) 
             @*@Html.ActionLink("Details", "Details", new { id=item.UserId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.UserId })*@
         </td>
@@ -116,3 +117,4 @@
 }
 
 </table>
+<p> @Html.ActionLink("Back to List", "StudentList")</p>
