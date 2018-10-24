@@ -100,8 +100,8 @@ namespace UserApplication.Controllers
             user.Password = userViewModel.Password;
             user.Email = userViewModel.Email;
             user.DOB = userViewModel.DOB;
-            user.DateCreated = userViewModel.DateCreated;
-            user.DateModified = userViewModel.DateModified;
+            user.DateCreated = DateTime.Now;
+            user.DateModified = DateTime.Now;
             user.IsActive = userViewModel.IsActive;
             user.RoleId = userViewModel.RoleId;
             user.CourseId = userViewModel.CourseId;
@@ -227,6 +227,15 @@ namespace UserApplication.Controllers
             List<Course> Lists = obj.Courses.ToList();
             ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
 
+            List<Country> CountryList = obj.Countries.ToList();
+            ViewBag.CountryLists = new SelectList(CountryList, "CountryId", "CountryName");
+
+            List<State> StateList = obj.States.ToList();
+            ViewBag.StateLists = new SelectList(StateList, "StateId", "StateName");
+
+            List<City> CityList = obj.Cities.ToList();
+            ViewBag.CityLists = new SelectList(CityList, "CityId", "CityName");
+
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -245,8 +254,7 @@ namespace UserApplication.Controllers
             objUserViewModel.RoleId = objUser.RoleId;
             objUserViewModel.CourseId = objUser.CourseId;
             objUserViewModel.IsActive = objUser.IsActive;
-            objUserViewModel.DateCreated = objUser.DateCreated;
-            objUserViewModel.DateModified = objUser.DateModified;
+            objUser.DateModified = DateTime.Now;
             objUserViewModel.AddressLine1 = objUser.AddressLine1;
             objUserViewModel.AddressLine2 = objUser.AddressLine2;
             objUserViewModel.CountryId = objUser.Address.CountryId;
@@ -290,13 +298,12 @@ namespace UserApplication.Controllers
                     objUser.RoleId = objUserViewModel.RoleId;
                     objUser.CourseId = objUserViewModel.CourseId;
                     objUser.IsActive = objUserViewModel.IsActive;
-                    objUser.DateCreated = objUserViewModel.DateCreated;
-                    objUser.DateModified = objUserViewModel.DateModified;
+                    objUser.DateModified = DateTime.Now;
                     objUser.AddressLine1 = objUserViewModel.AddressLine1;
                     objUser.AddressLine2 = objUserViewModel.AddressLine2;
-                    //objUser.Address.CountryId = objUserViewModel.CountryId;
-                    //objUser.Address.StateId = objUserViewModel.StateId;
-                    // objUser.Address.CityId = objUserViewModel.CityId;
+                    objUser.Address.CountryId = objUserViewModel.CountryId;
+                    objUser.Address.StateId = objUserViewModel.StateId;
+                    objUser.Address.CityId = objUserViewModel.CityId;
                     objUser.Address.Zipcode = objUserViewModel.Zipcode;
 
                     //  obj.Users.Add(objUser);
@@ -443,10 +450,10 @@ namespace UserApplication.Controllers
         public ActionResult AssignSubject(TeacherInSubject objTeacherInSubject)
         {
             List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
-            ViewBag.TeacherList = new SelectList(List, "RoleId", "FirstName");
+            ViewBag.TeacherList = new SelectList(List, "RoleId", "FirstName",objTeacherInSubject.UserId);
 
             List<Subject> Lists = obj.Subjects.ToList();
-            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName",objTeacherInSubject.SubjectId);
 
             //TeacherInSubject objTeacherInSubject = new TeacherInSubject();
             //objTeacherInSubject.UserId = objUserViewModel.UserId;
@@ -455,7 +462,7 @@ namespace UserApplication.Controllers
             obj.TeacherInSubjects.Add(objTeacherInSubject);  //Insert data 
             obj.SaveChanges();           //Save data in database
 
-            return RedirectToAction("UserList");
+            return View(objTeacherInSubject);
         }
         /// <summary>
         /// GET:Admin can create course
@@ -475,29 +482,68 @@ namespace UserApplication.Controllers
         public ActionResult CreateCourse(Course objCourse)
         {
              obj.Courses.Add(objCourse);      //Insert data 
-            obj.SaveChanges();               //Save data
+             obj.SaveChanges();               //Save data
+
+            return RedirectToAction("CreateSubject");
+        }
+        /// <summary>
+        /// GET : Admin can create subject
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateSubject()
+        {
+            return View();
+        }
+        /// <summary>
+        /// POST: Admin can create subject
+        /// </summary>
+        /// <param name="objSubject"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateSubject(Subject objSubject)
+        {
+            obj.Subjects.Add(objSubject);
+            obj.SaveChanges();
 
             return RedirectToAction("CreateSubjectForCourse");
         }
-        [HttpGet]
-        public ActionResult CreateSubjectForCourse()
+        /// <summary>
+        /// GET: Admin can assign subject to course
+        /// </summary>
+        /// <returns></returns>
+       
+        public ActionResult AssignSubjectForCourse()
         {
             List<Course> List = obj.Courses.ToList();
             ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName");
+            
+            List<Subject> Lists = obj.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
+
             return View();
         }
+        /// <summary>
+        /// POST:Admin can assign subject to course
+        /// </summary>
+        /// <param name="objSubjectInCourse"></param>
+        /// <returns></returns>           
         [HttpPost]
-        public ActionResult CreateSubjectForCourse(SubjectInCourse objSubjectInCourse)
+        public ActionResult AssignSubjectForCourse(SubjectInCourse objSubjectInCourse)
         {
             List<Course> List = obj.Courses.ToList();
-            ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName");
+            ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName", objSubjectInCourse.CourseId);
+
+            List<Subject> Lists = obj.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName", objSubjectInCourse.SubjectId);
 
             obj.SubjectsInCourses.Add(objSubjectInCourse);
             obj.SaveChanges();
 
-            return View("UserList");
+
+            return View(objSubjectInCourse);
         }
-       
+
 
 
 

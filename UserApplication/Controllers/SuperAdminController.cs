@@ -26,9 +26,9 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-             var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
-             return View(listOfUsers);
-          
+            var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
+            return View(listOfUsers);
+
         }
         public ActionResult TeacherList()
         {
@@ -40,12 +40,12 @@ namespace UserApplication.Controllers
             var studentList = obj.Users.Where(u => u.RoleId == 4).ToList();
             return View("studentList");
         }
-               /// <summary>
+        /// <summary>
         /// GET:Super Admin can create user
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CreateUser()    
+        public ActionResult CreateUser()
         {
             //Dropdown for Role List
             List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
@@ -106,8 +106,8 @@ namespace UserApplication.Controllers
             user.Password = userViewModel.Password;
             user.Email = userViewModel.Email;
             user.DOB = userViewModel.DOB;
-            user.DateCreated = userViewModel.DateCreated;
-            user.DateModified = userViewModel.DateModified;
+            user.DateCreated = DateTime.Now;
+            user.DateModified = DateTime.Now;
             user.IsActive = userViewModel.IsActive;
             user.RoleId = userViewModel.RoleId;
             user.CourseId = userViewModel.CourseId;
@@ -127,7 +127,7 @@ namespace UserApplication.Controllers
             obj.UserInRoles.Add(userInRole);
             obj.SaveChanges();
 
-           return RedirectToAction("UserList");
+            return RedirectToAction("UserList");
         }
         /// <summary>
         /// Get all countries
@@ -262,8 +262,7 @@ namespace UserApplication.Controllers
             objUserViewModel.RoleId = objUser.RoleId;
             objUserViewModel.CourseId = objUser.CourseId;
             objUserViewModel.IsActive = objUser.IsActive;
-            objUserViewModel.DateCreated = objUser.DateCreated;
-            objUserViewModel.DateModified = objUser.DateModified;
+            objUser.DateModified = DateTime.Now;
             objUserViewModel.AddressLine1 = objUser.AddressLine1;
             objUserViewModel.AddressLine2 = objUser.AddressLine2;
             objUserViewModel.CountryId = objUser.Address.CountryId;
@@ -307,8 +306,7 @@ namespace UserApplication.Controllers
                     objUser.RoleId = objUserViewModel.RoleId;
                     objUser.CourseId = objUserViewModel.CourseId;
                     objUser.IsActive = objUserViewModel.IsActive;
-                    objUser.DateCreated = objUserViewModel.DateCreated;
-                    objUser.DateModified = objUserViewModel.DateModified;
+                    objUser.DateModified = DateTime.Now;
                     objUser.AddressLine1 = objUserViewModel.AddressLine1;
                     objUser.AddressLine2 = objUserViewModel.AddressLine2;
                     objUser.Address.CountryId = objUserViewModel.CountryId;
@@ -417,7 +415,6 @@ namespace UserApplication.Controllers
                 objUserViewModel.DOB = user.DOB;
                 objUserViewModel.RoleId = user.RoleId;
                 objUserViewModel.CourseId = user.CourseId;
-                //objUserViewModel.AddressId = user.AddressId;
                 objUserViewModel.IsActive = user.IsActive;
                 objUserViewModel.DateCreated = user.DateCreated;
                 objUserViewModel.DateModified = user.DateModified;
@@ -451,10 +448,84 @@ namespace UserApplication.Controllers
             obj.Courses.Add(objCourse);      //Insert data 
             obj.SaveChanges();               //Save data
 
-            return RedirectToAction("UserList");
+            return RedirectToAction("CourseList");
+        }
+        /// <summary>
+        /// GET : Super Admin can create subject
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateSubject()
+        {
+            return View();
+        }
+        /// <summary>
+        /// POST: Super Admin can create subject
+        /// </summary>
+        /// <param name="objSubject"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateSubject(Subject objSubject)
+        {
+            obj.Subjects.Add(objSubject);
+            obj.SaveChanges();
+
+            return RedirectToAction("SubjectList");
+        }
+        /// <summary>
+        /// GET: Super Admin can assign subject to course
+        /// </summary>
+        /// <returns></returns>
+
+        public ActionResult AssignSubjectForCourse()
+        {
+            List<Course> List = obj.Courses.ToList();
+            ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName");
+
+            List<Subject> Lists = obj.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
+
+            return View();
+        }
+        /// <summary>
+        /// POST:Super Admin can assign subject to course
+        /// </summary>
+        /// <param name="objSubjectInCourse"></param>
+        /// <returns></returns>           
+        [HttpPost]
+        public ActionResult AssignSubjectForCourse(SubjectInCourse objSubjectInCourse)
+        {
+            List<Course> List = obj.Courses.ToList();
+            ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName", objSubjectInCourse.CourseId);
+
+            List<Subject> Lists = obj.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName", objSubjectInCourse.SubjectId);
+
+            obj.SubjectsInCourses.Add(objSubjectInCourse);
+            obj.SaveChanges();
+
+
+            return View(objSubjectInCourse);
+        }
+        public ActionResult CourseList()
+        {
+            var listOfCourse = obj.Courses.ToList();
+            return View(listOfCourse);
+        }
+        public ActionResult SubjectList()
+        {
+            var listOfSubject = obj.Subjects.ToList();
+            return View(listOfSubject);
         }
     }
 }
+
+
+
+
+
+    
+
 
 
 

@@ -140,7 +140,7 @@
             @Html.DisplayFor(model => model.Zipcode)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.DateCreated)
         </dt>
 
@@ -154,7 +154,7 @@
 
         <dd>
             @Html.DisplayFor(model => model.DateModified)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.IsActive)
@@ -169,9 +169,9 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> 
-            @Html.ActionLink("Back to List", "UserList")
-        </div>
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        @Html.Partial("_BackToListButtonPartial")
+    </div>
     }
 </div>

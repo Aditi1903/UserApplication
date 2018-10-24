@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
 
-<h2>Student and Teacher List</h2>
+<h2>Teachers and Students List</h2>
 
 <p>
    @Html.Partial("_CreateButtonPartial")
-   @Html.ActionLink("Create Course","CreateCourse")
+   @Html.Partial("_CreateCourseButtonPartial")
 </p>
 <table class="table">
     <tr>
@@ -49,12 +49,12 @@
         <th>
             @Html.DisplayNameFor(model => model.AddressLine2)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.DateCreated)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateModified)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
@@ -100,12 +100,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.AddressLine2)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.DateCreated)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateModified)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.IsActive)
         </td>

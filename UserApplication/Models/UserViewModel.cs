@@ -90,7 +90,8 @@ namespace UserApplication.Models
         [DisplayName("Is Active")]
         public bool IsActive { get; set; }
 
-       
+        //[Required]
+        //[DisplayName("Subject")]
         public int SubjectId { get; set; }
     }
 }

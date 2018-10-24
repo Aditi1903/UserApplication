@@ -450,7 +450,16 @@
     <Content Include="Views\Shared\_LogOutPage.cshtml" />
     <Content Include="Views\Admin\CreateCourse.cshtml" />
     <Content Include="Views\SuperAdmin\CreateCourse.cshtml" />
-    <Content Include="Views\Admin\CreateSubjectForCourse.cshtml" />
+    <Content Include="Views\Admin\AssignSubjectForCourse.cshtml" />
+    <Content Include="Views\Shared\_CreateCourseButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_AssignSubjectForCourseButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_BackToListButtonForStudent.cshtml" />
+    <Content Include="Views\Admin\CreateSubject.cshtml" />
+    <Content Include="Views\Shared\_AddSubjectButtonPartial.cshtml" />
+    <Content Include="Views\SuperAdmin\CreateSubject.cshtml" />
+    <Content Include="Views\SuperAdmin\AssignSubjectForCourse.cshtml" />
+    <Content Include="Views\SuperAdmin\CourseList.cshtml" />
+    <Content Include="Views\SuperAdmin\SubjectList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "CreateCourse";
+    Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
 
 <h2>Create Course</h2>
@@ -30,6 +31,7 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Create Subject For Course", "CreateSubjectForCourse")
-</div>
+    <div>
+        @Html.Partial("_AddSubjectButtonPartial")
+        @Html.Partial("_BackToListButtonPartial")
+    </div>
