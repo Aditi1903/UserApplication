@@ -31,10 +31,10 @@
 
             @Html.DisplayNameFor(model => model.Hobbies)
         </th>
-        <th>
+        @*<th>
 
             @Html.DisplayNameFor(model => model.Password)
-        </th>
+        </th>*@
         <th>
 
             @Html.DisplayNameFor(model => model.Email)
@@ -67,10 +67,10 @@
 
                 @Html.DisplayNameFor(model => model.DateModified)
             </th>*@
-        <th>
+        @*<th>
 
             @Html.DisplayNameFor(model => model.IsActive)
-        </th>
+        </th>*@
         <th>
 
             @Html.DisplayNameFor(model => model.Role.RoleName)
@@ -93,9 +93,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Hobbies)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Password)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
@@ -120,9 +120,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DateModified)
                 </td>*@
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Role.RoleName)
             </td>
@@ -132,6 +132,11 @@
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId })
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserId })
                 @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })
+                @if (item.Role.RoleName != "Student")
+                {
+                    @Html.ActionLink("Assign Subject", "AssignSubject", new { id = item.UserId })
+
+                }
             </td>
         </tr>
     }

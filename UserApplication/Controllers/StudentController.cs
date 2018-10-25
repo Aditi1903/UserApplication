@@ -44,11 +44,19 @@ namespace UserApplication.Controllers
             var listOfTeachersSubject = obj.TeacherInSubjects.ToList();
             return View(listOfTeachersSubject);
         }
+        /// <summary>
+        /// List of students with their course
+        /// </summary>
+        /// <returns></returns>
         public ActionResult StudentCourse()
         {
             var listOfStudentCourse = obj.Users.Where(u => u.RoleId == 4).ToList();
             return View(listOfStudentCourse);
         }
+        /// <summary>
+        /// List of subjects in courses
+        /// </summary>
+        /// <returns></returns>
         public ActionResult SubjectsInCourse()
         {
             var listOfSubjectsInCourse = obj.SubjectsInCourses.ToList();

@@ -27,7 +27,7 @@ namespace UserApplication.Controllers
         {
             //var list = obj.Users.Where(u =>u.RoleId == 2 && u.RoleId == 3 && u.RoleId == 4).ToList();
             //return View(list);
-            var listOfUser = obj.Users.Where(u => u.RoleId != 1 && u.RoleId!=2).ToList();
+            var listOfUser = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
             return View(listOfUser);
         }
         /// <summary>
@@ -354,7 +354,6 @@ namespace UserApplication.Controllers
                 objUserViewModel.CityId = user.Address.CityId;
                 objUserViewModel.Zipcode = user.Address.Zipcode;
 
-
                 if (user == null)
                 {
                     return HttpNotFound();
@@ -414,16 +413,26 @@ namespace UserApplication.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    User objUser = obj.Users.Find(id);
+
+                    UserInRole objUserInRole = obj.UserInRoles.Where(m => m.UserId == id).FirstOrDefault();
+                    User objUser = obj.Users.Where(m => m.UserId == id).FirstOrDefault();
+                    Address objAddress = obj.Addresses.Where(m => m.AddressId == objUser.AddressId).FirstOrDefault();
+
+                    //To remove address of user from address table
+                    obj.Addresses.Remove(objAddress);
+                    //To Remove User from User Table
                     obj.Users.Remove(objUser);
+
+                    // To remove User from UserInRole table.
+                    obj.UserInRoles.Remove(objUserInRole);
+
                     obj.SaveChanges();
                 }
-
                 return RedirectToAction("UserList");
             }
             catch (Exception ex)
             {
-              throw ex;
+               throw ex;
             }
         }
         /// <summary>
@@ -431,16 +440,16 @@ namespace UserApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-       public ActionResult AssignSubject()
-       {
+        public ActionResult AssignSubject()
+        {
             List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
-            ViewBag.TeacherList = new SelectList(List, "RoleId", "FirstName");
+            ViewBag.TeacherList = new SelectList(List, "UserId", "FirstName");
 
             List<Subject> Lists = obj.Subjects.ToList();
             ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
-           
-           return View();
-       }
+
+            return View();
+        }
         /// <summary>
         ///POST: Admin can assign subjects to teachers
         /// </summary>
@@ -450,19 +459,16 @@ namespace UserApplication.Controllers
         public ActionResult AssignSubject(TeacherInSubject objTeacherInSubject)
         {
             List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
-            ViewBag.TeacherList = new SelectList(List, "RoleId", "FirstName",objTeacherInSubject.UserId);
+            ViewBag.TeacherList = new SelectList(List, "UserId", "FirstName", objTeacherInSubject.UserId);
 
             List<Subject> Lists = obj.Subjects.ToList();
-            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName",objTeacherInSubject.SubjectId);
-
-            //TeacherInSubject objTeacherInSubject = new TeacherInSubject();
-            //objTeacherInSubject.UserId = objUserViewModel.UserId;
-            //objTeacherInSubject.SubjectId = objUserViewModel.SubjectId;
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName", objTeacherInSubject.SubjectId);
 
             obj.TeacherInSubjects.Add(objTeacherInSubject);  //Insert data 
             obj.SaveChanges();           //Save data in database
 
-            return View(objTeacherInSubject);
+            //return View(objTeacherInSubject);
+            return RedirectToAction("UserList");
         }
         /// <summary>
         /// GET:Admin can create course
@@ -481,10 +487,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult CreateCourse(Course objCourse)
         {
-             obj.Courses.Add(objCourse);      //Insert data 
-             obj.SaveChanges();               //Save data
+            obj.Courses.Add(objCourse);      //Insert data 
+            obj.SaveChanges();               //Save data
 
-            return RedirectToAction("CreateSubject");
+            return RedirectToAction("CourseList");
         }
         /// <summary>
         /// GET : Admin can create subject
@@ -506,18 +512,18 @@ namespace UserApplication.Controllers
             obj.Subjects.Add(objSubject);
             obj.SaveChanges();
 
-            return RedirectToAction("CreateSubjectForCourse");
+            return RedirectToAction("SubjectList");
         }
         /// <summary>
         /// GET: Admin can assign subject to course
         /// </summary>
         /// <returns></returns>
-       
+
         public ActionResult AssignSubjectForCourse()
         {
             List<Course> List = obj.Courses.ToList();
             ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName");
-            
+
             List<Subject> Lists = obj.Subjects.ToList();
             ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
 
@@ -541,12 +547,113 @@ namespace UserApplication.Controllers
             obj.SaveChanges();
 
 
-            return View(objSubjectInCourse);
+            //return View(objSubjectInCourse);
+            return RedirectToAction("CourseAndSubjectList");
         }
+        /// <summary>
+        /// Admin can view course list after creating course
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CourseList()
+        {
+            var listOfCourse = obj.Courses.ToList();
+            return View(listOfCourse);
+        }
+        /// <summary>
+        /// Admin can view subject list after creating subject
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SubjectList()
+        {
+            var listOfSubject = obj.Subjects.ToList();
+            return View(listOfSubject);
+        }
+        /// <summary>
+        /// GET : Admin can delete course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteCourse(int id)
+        {
+            var removeCourse = obj.Courses.Single(x => x.CourseId == id);
 
+            return View(removeCourse);
+        }
+        /// <summary>
+        /// POST : Admin can delete course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objCourse"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteCourse(int id, Course objCourse)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                var deleteCourse = obj.Courses.Single(x => x.CourseId == id);
+                obj.Courses.Remove(deleteCourse);
 
+                obj.SaveChanges();
 
+                return RedirectToAction("CourseList");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        /// <summary>
+        /// GET : Admin can delete subject
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteSubject(int id)
+        {
+            var removeSubject = obj.Subjects.Single(x => x.SubjectId == id);
 
+            return View(removeSubject);
+        }
+        /// <summary>
+        /// POST : Admin can delete subject
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objSubject"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteSubject(int id, Subject objSubject)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                var deleteSubject = obj.Subjects.Single(x => x.SubjectId == id);
+                obj.Subjects.Remove(deleteSubject);
 
+                obj.SaveChanges();
+
+                return RedirectToAction("SubjectList");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        /// <summary>
+        /// Admin can view course and subject list
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CourseAndSubjectList()
+        {
+            var listOfCourseAndSubject = obj.SubjectsInCourses.ToList();
+            return View(listOfCourseAndSubject);
+        }
     }
 }
+
+
+
+
+
+        

@@ -28,17 +28,6 @@ namespace UserApplication.Controllers
         {
             var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
             return View(listOfUsers);
-
-        }
-        public ActionResult TeacherList()
-        {
-            var teacherList = obj.Users.Where(u => u.RoleId == 3).ToList();
-            return View("teacherList");
-        }
-        public ActionResult StudentList()
-        {
-            var studentList = obj.Users.Where(u => u.RoleId == 4).ToList();
-            return View("studentList");
         }
         /// <summary>
         /// GET:Super Admin can create user
@@ -48,7 +37,7 @@ namespace UserApplication.Controllers
         public ActionResult CreateUser()
         {
             //Dropdown for Role List
-            List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for the Course List
@@ -227,7 +216,7 @@ namespace UserApplication.Controllers
         public ActionResult EditUser(int id)
         {
             //Dropdown for Role List
-            List<Role> List = obj.Roles.ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for Course List
@@ -377,12 +366,24 @@ namespace UserApplication.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    User objUser = obj.Users.Find(id);
-                    obj.Users.Remove(objUser);
-                    obj.SaveChanges();
-                }
 
+                    UserInRole objUserInRole = obj.UserInRoles.Where(m => m.UserId == id).FirstOrDefault();
+                    User objUser = obj.Users.Where(m => m.UserId == id).FirstOrDefault();
+                    Address objAddress = obj.Addresses.Where(m => m.AddressId == objUser.AddressId).FirstOrDefault();
+
+                    //To remove address of user from address table
+                    obj.Addresses.Remove(objAddress);
+                    //To Remove User from User Table
+                    obj.Users.Remove(objUser);
+
+                    // To remove User from UserInRole table.
+                    obj.UserInRoles.Remove(objUserInRole);
+
+                    obj.SaveChanges();
+
+                }
                 return RedirectToAction("UserList");
+
             }
             catch (Exception ex)
             {
@@ -390,8 +391,9 @@ namespace UserApplication.Controllers
                 throw ex;
             }
         }
+
         /// <summary>
-        /// Super Admin can see the details of user
+        /// Super admin can view user details
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -432,13 +434,17 @@ namespace UserApplication.Controllers
                 return View(objUserViewModel);
             }
         }
+        /// <summary>
+        /// GET : Super Admin can create course
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult CreateCourse()
         {
             return View();
         }
         /// <summary>
-        /// POST : Admin can create course
+        /// POST :Super Admin can create course
         /// </summary>
         /// <param name="objCourse"></param>
         /// <returns></returns>
@@ -505,20 +511,115 @@ namespace UserApplication.Controllers
             obj.SaveChanges();
 
 
-            return View(objSubjectInCourse);
+            //return View(objSubjectInCourse);
+            return RedirectToAction("CourseAndSubjectList");
         }
+        /// <summary>
+        /// Super Admin after creating course can view course list
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CourseList()
         {
             var listOfCourse = obj.Courses.ToList();
             return View(listOfCourse);
         }
+        /// <summary>
+        /// Super Admin after creating subject can view subject list
+        /// </summary>
+        /// <returns></returns>
         public ActionResult SubjectList()
         {
             var listOfSubject = obj.Subjects.ToList();
             return View(listOfSubject);
         }
+        /// <summary>
+        /// GET : Super admin can delete course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteCourse(int id)
+        {
+            var removeCourse = obj.Courses.Single(x => x.CourseId == id);
+
+            return View(removeCourse);
+        }
+        /// <summary>
+        /// POST: Super admin can delete course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objCourse"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteCourse(int id, Course objCourse)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                var deleteCourse = obj.Courses.Single(x => x.CourseId == id);
+                obj.Courses.Remove(deleteCourse);
+
+                obj.SaveChanges();
+
+                return RedirectToAction("CourseList");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        /// <summary>
+        /// GET : Super admin can delete subject
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteSubject(int id)
+        {
+            var removeSubject = obj.Subjects.Single(x => x.SubjectId == id);
+
+            return View(removeSubject);
+        }
+        /// <summary>
+        /// POST : Super admin can delete subject
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objSubject"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteSubject(int id, Subject objSubject)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                var deleteSubject = obj.Subjects.Single(x => x.SubjectId == id);
+                obj.Subjects.Remove(deleteSubject);
+
+                obj.SaveChanges();
+
+                return RedirectToAction("SubjectList");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        /// <summary>
+        /// Super admin can view list of courses with subjects
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CourseAndSubjectList()
+        {
+            var listOfCourseAndSubject = obj.SubjectsInCourses.ToList();
+            return View(listOfCourseAndSubject);
+        }
     }
 }
+        
+
+
+    
+
 
 
 

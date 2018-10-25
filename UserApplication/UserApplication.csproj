@@ -460,6 +460,15 @@
     <Content Include="Views\SuperAdmin\AssignSubjectForCourse.cshtml" />
     <Content Include="Views\SuperAdmin\CourseList.cshtml" />
     <Content Include="Views\SuperAdmin\SubjectList.cshtml" />
+    <Content Include="Views\Admin\CourseList.cshtml" />
+    <Content Include="Views\Admin\SubjectList.cshtml" />
+    <Content Include="Views\Admin\DeleteCourse.cshtml" />
+    <Content Include="Views\Admin\DeleteSubject.cshtml" />
+    <Content Include="Views\SuperAdmin\DeleteCourse.cshtml" />
+    <Content Include="Views\SuperAdmin\DeleteSubject.cshtml" />
+    <Content Include="Views\Admin\CourseAndSubjectList.cshtml" />
+    <Content Include="Views\SuperAdmin\CourseAndSubjectList.cshtml" />
+    <Content Include="Views\Shared\_RegistrationPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
