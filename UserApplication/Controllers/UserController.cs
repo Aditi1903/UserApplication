@@ -91,8 +91,8 @@ namespace UserApplication.Controllers
             user.Password = userViewModel.Password;
             user.Email = userViewModel.Email;
             user.DOB = userViewModel.DOB;
-            user.DateCreated = userViewModel.DateCreated;
-            user.DateModified = userViewModel.DateModified;
+            user.DateCreated = DateTime.Now;
+            user.DateModified = DateTime.Now;
             user.IsActive = userViewModel.IsActive;
             user.RoleId = userViewModel.RoleId;
             user.CourseId = userViewModel.CourseId;
@@ -237,7 +237,7 @@ namespace UserApplication.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("StudentList", "Student");
+                    return RedirectToAction("StudentDetail", "Student",new { id = LoginDetails.UserId });
                 }
 
             return View("Login");
