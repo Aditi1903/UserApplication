@@ -28,6 +28,7 @@ namespace UserApplication.Controllers
         {
             var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
             return View(listOfUsers);
+            
         }
         /// <summary>
         /// GET:Super Admin can create user
@@ -612,6 +613,50 @@ namespace UserApplication.Controllers
         {
             var listOfCourseAndSubject = obj.SubjectsInCourses.ToList();
             return View(listOfCourseAndSubject);
+        }
+        /// <summary>
+        /// GET:Super Admin can assign subjects to teachers
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult AssignSubjectToTeacher()
+        {
+            List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
+            ViewBag.TeacherList = new SelectList(List, "UserId", "FirstName");
+
+            List<Subject> Lists = obj.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
+
+            return View();
+        }
+        /// <summary>
+        ///POST:Super Admin can assign subjects to teachers
+        /// </summary>
+        /// <param name="objUserViewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AssignSubjectToTeacher(TeacherInSubject objTeacherInSubject)
+        {
+            List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
+            ViewBag.TeacherList = new SelectList(List, "UserId", "FirstName", objTeacherInSubject.UserId);
+
+            List<Subject> Lists = obj.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName", objTeacherInSubject.SubjectId);
+
+            obj.TeacherInSubjects.Add(objTeacherInSubject);  //Insert data 
+            obj.SaveChanges();           //Save data in database
+
+            //return View(objTeacherInSubject);
+            return RedirectToAction("TeacherSubjectList");
+        }
+        /// <summary>
+        /// Super Admin can view list of teachers with their subjects
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TeacherSubjectList()
+        {
+            var listOfTeachersSubject = obj.TeacherInSubjects.ToList();
+            return View(listOfTeachersSubject);
         }
     }
 }

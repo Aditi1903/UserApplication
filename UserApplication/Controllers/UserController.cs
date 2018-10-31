@@ -89,6 +89,7 @@ namespace UserApplication.Controllers
             user.Gender = userViewModel.Gender;
             user.Hobbies = userViewModel.Hobbies;
             user.Password = userViewModel.Password;
+           // user.Password = userViewModel.Password;
             user.Email = userViewModel.Email;
             user.DOB = userViewModel.DOB;
             user.DateCreated = DateTime.Now;
@@ -233,15 +234,20 @@ namespace UserApplication.Controllers
                 }
                 else if (LoginDetails.RoleId == 3)
                 {
-                    return RedirectToAction("UserList", "Teacher");
+                    return RedirectToAction("TeacherDetail", "Teacher",new { id = LoginDetails.UserId });
                 }
                 else
                 {
                     return RedirectToAction("StudentDetail", "Student",new { id = LoginDetails.UserId });
                 }
+           
 
             return View("Login");
         }
+        /// <summary>
+        /// Logout
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LogOut()
         {
             return RedirectToAction("Login");

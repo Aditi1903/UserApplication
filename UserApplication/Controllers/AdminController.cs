@@ -649,6 +649,15 @@ namespace UserApplication.Controllers
             var listOfCourseAndSubject = obj.SubjectsInCourses.ToList();
             return View(listOfCourseAndSubject);
         }
+        /// <summary>
+        /// Admin can see the list of teachers with their subjects
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TeacherSubjectList()
+        {
+            var listOfTeachersSubject = obj.TeacherInSubjects.ToList();
+            return View(listOfTeachersSubject);
+        }
     }
 }
 

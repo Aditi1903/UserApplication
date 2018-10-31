@@ -22,8 +22,18 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-            var listOfStudent = obj.Users.Where(u => u.RoleId != 1 && u.RoleId!=2 && u.RoleId!=3).ToList();
-            return View(listOfStudent);
+            //User user = new User();
+
+            //var studentInCourse = obj.Users.Where(n => n.CourseId == id).Select(k => k.RoleId == 4).ToList();
+
+            //if (studentInCourse != null)
+            //{
+            //    return View(studentInCourse);
+            //}
+            //return View();
+            
+            var studentList = obj.Users.Where(u => u.RoleId !=1 && u.RoleId !=2 && u.RoleId !=3).ToList();
+            return View(studentList);
         }
         /// <summary>
         /// Teacher can view the details of students
@@ -31,6 +41,49 @@ namespace UserApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         public ActionResult UserDetails(int? id)
+        {
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                User user = obj.Users.Find(id);
+                UserViewModel objUserViewModel = new UserViewModel();
+                //Course objCourse = new Course();
+
+                objUserViewModel.FirstName = user.FirstName;
+                objUserViewModel.LastName = user.LastName;
+                objUserViewModel.Gender = user.Gender;
+                objUserViewModel.Hobbies = user.Hobbies;
+                objUserViewModel.Email = user.Email;
+                objUserViewModel.Password = user.Password;
+                objUserViewModel.DOB = user.DOB;
+                objUserViewModel.RoleId = user.RoleId;
+                objUserViewModel.CourseId = user.CourseId;
+                objUserViewModel.IsActive = user.IsActive;
+                objUserViewModel.DateCreated = user.DateCreated;
+                objUserViewModel.DateModified = user.DateModified;
+                objUserViewModel.AddressLine1 = user.AddressLine1;
+                objUserViewModel.AddressLine2 = user.AddressLine2;
+                objUserViewModel.CountryId = user.Address.CountryId;
+                objUserViewModel.StateId = user.Address.StateId;
+                objUserViewModel.CityId = user.Address.CityId;
+                objUserViewModel.Zipcode = user.Address.Zipcode;
+
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(objUserViewModel);
+            }
+        }
+        /// <summary>
+        /// Teacher can view self details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult TeacherDetail(int? id)
         {
             {
                 if (id == null)

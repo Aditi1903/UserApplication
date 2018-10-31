@@ -132,9 +132,9 @@
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId })
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserId })
                 @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })
-                @if (item.Role.RoleName != "Student")
+                @if (item.Role.RoleName != "Student" && item.Role.RoleName != "Admin")
                 {
-                    @Html.ActionLink("Assign Subject", "AssignSubject", new { id = item.UserId })
+                    @Html.ActionLink("Assign Subject", "AssignSubjectToTeacher", new { id = item.UserId })
 
                 }
             </td>

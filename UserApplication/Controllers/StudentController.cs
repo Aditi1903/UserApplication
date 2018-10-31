@@ -42,7 +42,7 @@ namespace UserApplication.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult StudentDetail(int? id)
+        public ActionResult StudentDetail(int? id)                 
         {
             {
                 if (id == null)
@@ -72,6 +72,7 @@ namespace UserApplication.Controllers
                 objUserViewModel.StateId = user.Address.StateId;
                 objUserViewModel.CityId = user.Address.CityId;
                 objUserViewModel.Zipcode = user.Address.Zipcode;
+                objUserViewModel.UserId = user.UserId;
 
                 if (user == null)
                 {
@@ -79,6 +80,7 @@ namespace UserApplication.Controllers
                 }
                 return View(objUserViewModel);
             }
+            
         }
         /// <summary>
         /// Student can edit details
@@ -152,9 +154,20 @@ namespace UserApplication.Controllers
             //Dropdown for Role List
             List<Role> objRoleList = obj.Roles.ToList();
             ViewBag.Role = new SelectList(obj.Users.ToList(), "RoleId", "RoleName");
+
             //Dropdown for Course List
             List<Course> objCourseList = obj.Courses.ToList();
             ViewBag.Course = objCourseList;
+
+            List<Country> CountryList = obj.Countries.ToList();
+            ViewBag.CountryLists = new SelectList(CountryList, "CountryId", "CountryName");
+
+            List<State> StateList = obj.States.ToList();
+            ViewBag.StateLists = new SelectList(StateList, "StateId", "StateName");
+
+            List<City> CityList = obj.Cities.ToList();
+            ViewBag.CityLists = new SelectList(CityList, "CityId", "CityName");
+
             try
             {
                 User objUser = obj.Users.Find(id);
@@ -179,7 +192,8 @@ namespace UserApplication.Controllers
                     objUser.Address.Zipcode = objUserViewModel.Zipcode;
 
                     obj.SaveChanges();    // //Save data in database
-                    return RedirectToAction("TeachersCourse");
+                    return RedirectToAction("StudentDetail",new { id = objUser.UserId });
+                   
                 }
                 return View(objUserViewModel);
             }

@@ -451,7 +451,7 @@
     <Content Include="Views\Admin\AssignSubjectForCourse.cshtml" />
     <Content Include="Views\Shared\_CreateCourseButtonPartial.cshtml" />
     <Content Include="Views\Shared\_AssignSubjectForCourseButtonPartial.cshtml" />
-    <Content Include="Views\Shared\_BackToListButtonForStudent.cshtml" />
+    <Content Include="Views\Shared\_BackToListButtonForTeachersCourse.cshtml" />
     <Content Include="Views\Admin\CreateSubject.cshtml" />
     <Content Include="Views\Shared\_AddSubjectButtonPartial.cshtml" />
     <Content Include="Views\SuperAdmin\CreateSubject.cshtml" />
@@ -468,8 +468,12 @@
     <Content Include="Views\SuperAdmin\CourseAndSubjectList.cshtml" />
     <Content Include="Views\Shared\_RegistrationPartialView.cshtml" />
     <Content Include="Views\Student\StudentDetail.cshtml" />
-    <Content Include="Views\Student\EditStudentProfile.cshtml" />
     <Content Include="Views\Shared\_EditStudentProfileButtonPartial.cshtml" />
+    <Content Include="Views\SuperAdmin\AssignSubjectToTeacher.cshtml" />
+    <Content Include="Views\SuperAdmin\TeacherSubjectList.cshtml" />
+    <Content Include="Views\Admin\TeacherSubjectList.cshtml" />
+    <Content Include="Views\Teacher\TeacherDetail.cshtml" />
+    <Content Include="Views\Student\EditStudentProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
