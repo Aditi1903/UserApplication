@@ -32,6 +32,7 @@ namespace UserApplication.Models
             ErrorMessage = "Password should be of minimum 6 characters with at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }

@@ -52,12 +52,12 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
-        </dt>
+                @Html.DisplayNameFor(model => model.ConfirmPassword)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ConfirmPassword)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.ConfirmPassword)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Email)
@@ -76,20 +76,20 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.RoleId)
-        </dt>
+                @Html.DisplayNameFor(model => model.RoleId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RoleId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.RoleId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CourseId)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.CourseId)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.AddressLine1)
@@ -108,36 +108,36 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.AddressId)
-        </dt>
+                @Html.DisplayNameFor(model => model.AddressId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AddressId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.AddressId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CountryId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CountryId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CountryId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CountryId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StateId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.StateId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StateId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.StateId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CityId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CityId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CityId)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.CityId)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Zipcode)
@@ -148,40 +148,50 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateModified)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateModified)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateModified)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DateModified)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.IsActive)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SubjectId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.SubjectId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SubjectId)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.SubjectId)
+            </dd>*@
 
     </dl>
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |*@
-    @Html.Partial("_BackToListButtonPartial")
+    @Html.Partial("_BackToListButtonForStudentList")
+
 </p>
+
+<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("EditTeacherProfile",new { id = Model.UserId })">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span>Edit Profile</span>
+    </a>
+</p>
+

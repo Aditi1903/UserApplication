@@ -474,6 +474,8 @@
     <Content Include="Views\Admin\TeacherSubjectList.cshtml" />
     <Content Include="Views\Teacher\TeacherDetail.cshtml" />
     <Content Include="Views\Student\EditStudentProfile.cshtml" />
+    <Content Include="Views\Shared\_BackToListButtonForStudentList.cshtml" />
+    <Content Include="Views\Teacher\EditTeacherProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

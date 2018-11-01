@@ -38,7 +38,7 @@ namespace UserApplication.Controllers
         public ActionResult CreateUser()
         {
             //Dropdown for Role List
-            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 ).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for the Course List
@@ -61,7 +61,7 @@ namespace UserApplication.Controllers
         {
 
             //Dropdown for Role List
-            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for Course List

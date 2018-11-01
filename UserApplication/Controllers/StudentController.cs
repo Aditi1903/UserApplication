@@ -83,7 +83,7 @@ namespace UserApplication.Controllers
             
         }
         /// <summary>
-        /// Student can edit details
+        /// GET:Student can edit details
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -91,7 +91,7 @@ namespace UserApplication.Controllers
         public ActionResult EditStudentProfile(int id)
         {
             //Dropdown for Role List
-            List<Role> List = obj.Roles.ToList();
+            List<Role> List = obj.Roles.Where(u => u.RoleId == 4).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for Course List
@@ -107,8 +107,6 @@ namespace UserApplication.Controllers
             List<City> CityList = obj.Cities.ToList();
             ViewBag.CityLists = new SelectList(CityList, "CityId", "CityName");
 
-
-
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -117,6 +115,7 @@ namespace UserApplication.Controllers
             User objUser = obj.Users.Find(id);
             UserViewModel objUserViewModel = new UserViewModel();
 
+            objUserViewModel.UserId = objUser.UserId;
             objUserViewModel.FirstName = objUser.FirstName;
             objUserViewModel.LastName = objUser.LastName;
             objUserViewModel.Gender = objUser.Gender;
@@ -134,6 +133,7 @@ namespace UserApplication.Controllers
             objUserViewModel.StateId = objUser.Address.StateId;
             objUserViewModel.CityId = objUser.Address.CityId;
             objUserViewModel.Zipcode = objUser.Address.Zipcode;
+            
 
 
             if (objUser == null)
@@ -143,7 +143,7 @@ namespace UserApplication.Controllers
             return View(objUserViewModel);
         }
         /// <summary>
-        ///  POST:Admin can edit the teacher and student details
+        ///  POST:Student can edit details
         /// </summary>
         /// <param name="id"></param>
         /// <param name="objUserViewModel"></param>
@@ -151,13 +151,12 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult EditStudentProfile(int id, UserViewModel objUserViewModel)
         {
-            //Dropdown for Role List
-            List<Role> objRoleList = obj.Roles.ToList();
-            ViewBag.Role = new SelectList(obj.Users.ToList(), "RoleId", "RoleName");
+            List<Role> List = obj.Roles.ToList();
+            ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
             //Dropdown for Course List
-            List<Course> objCourseList = obj.Courses.ToList();
-            ViewBag.Course = objCourseList;
+            List<Course> Lists = obj.Courses.ToList();
+            ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
 
             List<Country> CountryList = obj.Countries.ToList();
             ViewBag.CountryLists = new SelectList(CountryList, "CountryId", "CountryName");
@@ -173,6 +172,7 @@ namespace UserApplication.Controllers
                 User objUser = obj.Users.Find(id);
                 if (ModelState.IsValid)
                 {
+                    objUser.UserId = objUserViewModel.UserId;
                     objUser.FirstName = objUserViewModel.FirstName;
                     objUser.LastName = objUserViewModel.LastName;
                     objUser.Gender = objUserViewModel.Gender;

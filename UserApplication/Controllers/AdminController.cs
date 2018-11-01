@@ -277,12 +277,29 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
+            ////Dropdown for Role List
+            //List<Role> objRoleList = obj.Roles.ToList();
+            //ViewBag.Role = new SelectList(obj.Users.ToList(), "RoleId", "RoleName");
+            ////Dropdown for Course List
+            //List<Course> objCourseList = obj.Courses.ToList();
+            //ViewBag.Course = objCourseList;
+
             //Dropdown for Role List
-            List<Role> objRoleList = obj.Roles.ToList();
-            ViewBag.Role = new SelectList(obj.Users.ToList(), "RoleId", "RoleName");
+            List<Role> List = obj.Roles.ToList();
+            ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
+
             //Dropdown for Course List
-            List<Course> objCourseList = obj.Courses.ToList();
-            ViewBag.Course = objCourseList;
+            List<Course> Lists = obj.Courses.ToList();
+            ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
+
+            List<Country> CountryList = obj.Countries.ToList();
+            ViewBag.CountryLists = new SelectList(CountryList, "CountryId", "CountryName");
+
+            List<State> StateList = obj.States.ToList();
+            ViewBag.StateLists = new SelectList(StateList, "StateId", "StateName");
+
+            List<City> CityList = obj.Cities.ToList();
+            ViewBag.CityLists = new SelectList(CityList, "CityId", "CityName");
             try
             {
                 User objUser = obj.Users.Find(id);

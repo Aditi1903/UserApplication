@@ -1,11 +1,10 @@
 ﻿@model UserApplication.Models.UserViewModel
 
 @{
-    ViewBag.Title = "EditStudentProfile";
-    Layout = "~/Views/Shared/_LogOutPage.cshtml";
+    ViewBag.Title = "EditTeacherProfile";
 }
 
-<h2>EditStudentProfile</h2>
+<h2>EditTeacherProfile</h2>
 
 @using (Html.BeginForm())
 {
@@ -162,6 +161,30 @@
         </div>*@
 
     <div class="form-group">
+        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CountryId", ViewBag.CountryLists as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("StateId", ViewBag.StateLists as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CityId", ViewBag.CityLists as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.Zipcode, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Zipcode, new { htmlAttributes = new { @class = "form-control" } })
@@ -195,30 +218,6 @@
             </div>
         </div>*@
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("CountryId", ViewBag.CountryLists as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("StateId", ViewBag.StateLists as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("CityId", ViewBag.CityLists as SelectList, "--select--", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
     @*<div class="form-group">
         @Html.LabelFor(model => model.SubjectId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -227,21 +226,14 @@
         </div>
     </div>*@
 
-   <div class="form-group">
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-success" />
+            <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>
 </div>
 }
 
-@*<div>
+<div>
     @Html.ActionLink("Back to List", "Index")
-</div>*@
-    <p>
-        <a type="button" class="btn btn-primary btn-sm"
-           href="@Url.Action("TeachersCourse")">
-            <span class="glyphicon glyphicon-list"></span>
-            <span>Course of Teacher</span>
-        </a>
-    </p>
+</div>
