@@ -127,6 +127,7 @@ namespace UserApplication.Controllers
             objUserViewModel.CourseId = objUser.CourseId;
             objUserViewModel.IsActive = objUser.IsActive;
             objUser.DateModified = DateTime.Now;
+            objUserViewModel.AddressId = objUser.AddressId;
             objUserViewModel.AddressLine1 = objUser.AddressLine1;
             objUserViewModel.AddressLine2 = objUser.AddressLine2;
             objUserViewModel.CountryId = objUser.Address.CountryId;

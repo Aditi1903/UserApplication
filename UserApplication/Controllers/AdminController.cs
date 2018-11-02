@@ -244,17 +244,20 @@ namespace UserApplication.Controllers
             User objUser = obj.Users.Find(id);
             UserViewModel objUserViewModel = new UserViewModel();
 
+            objUserViewModel.UserId = objUser.UserId;
             objUserViewModel.FirstName = objUser.FirstName;
             objUserViewModel.LastName = objUser.LastName;
             objUserViewModel.Gender = objUser.Gender;
             objUserViewModel.Hobbies = objUser.Hobbies;
             objUserViewModel.Email = objUser.Email;
             objUserViewModel.Password = objUser.Password;
+            //objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
             objUserViewModel.DOB = objUser.DOB;
             objUserViewModel.RoleId = objUser.RoleId;
             objUserViewModel.CourseId = objUser.CourseId;
             objUserViewModel.IsActive = objUser.IsActive;
             objUser.DateModified = DateTime.Now;
+            objUserViewModel.AddressId = objUser.AddressId;
             objUserViewModel.AddressLine1 = objUser.AddressLine1;
             objUserViewModel.AddressLine2 = objUser.AddressLine2;
             objUserViewModel.CountryId = objUser.Address.CountryId;

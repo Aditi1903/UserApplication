@@ -20,10 +20,10 @@ namespace UserApplication.Controllers
         /// Teacher can view the list of students
         /// </summary>
         /// <returns></returns>
-        public ActionResult UserList()
+        public ActionResult UserList(int id)
         {
             
-            var studentList = obj.Users.Where(u => u.RoleId !=1 && u.RoleId !=2 && u.RoleId !=3).ToList();
+            var studentList = obj.Users.Where(u => u.RoleId == 4 && u.CourseId == id).ToList();
             return View(studentList);
         }
         /// <summary>
@@ -158,6 +158,7 @@ namespace UserApplication.Controllers
             objUserViewModel.CourseId = objUser.CourseId;
             objUserViewModel.IsActive = objUser.IsActive;
             objUser.DateModified = DateTime.Now;
+            objUserViewModel.AddressId = objUser.AddressId;
             objUserViewModel.AddressLine1 = objUser.AddressLine1;
             objUserViewModel.AddressLine2 = objUser.AddressLine2;
             objUserViewModel.CountryId = objUser.Address.CountryId;
@@ -222,7 +223,7 @@ namespace UserApplication.Controllers
 
                     //  obj.Users.Add(objUser);
                     obj.SaveChanges();    // //Save data in database
-                    return RedirectToAction("UserList");
+                    return RedirectToAction("TeacherDetail",new { id = objUser.UserId });
 
                 }
                 return View(objUserViewModel);

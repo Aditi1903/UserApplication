@@ -242,6 +242,7 @@ namespace UserApplication.Controllers
             //Object of user view model table
             UserViewModel objUserViewModel = new UserViewModel();
 
+            objUserViewModel.UserId = objUser.UserId;
             objUserViewModel.FirstName = objUser.FirstName;
             objUserViewModel.LastName = objUser.LastName;
             objUserViewModel.Gender = objUser.Gender;
@@ -253,6 +254,7 @@ namespace UserApplication.Controllers
             objUserViewModel.CourseId = objUser.CourseId;
             objUserViewModel.IsActive = objUser.IsActive;
             objUser.DateModified = DateTime.Now;
+            objUserViewModel.AddressId = objUser.AddressId;
             objUserViewModel.AddressLine1 = objUser.AddressLine1;
             objUserViewModel.AddressLine2 = objUser.AddressLine2;
             objUserViewModel.CountryId = objUser.Address.CountryId;
@@ -276,11 +278,21 @@ namespace UserApplication.Controllers
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
             //Dropdown for Role List
-            List<Role> objRoleList = obj.Roles.ToList();
-            ViewBag.Role = new SelectList(obj.Users.ToList(), "RoleId", "RoleName");
+            List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
+            ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
+
             //Dropdown for Course List
-            List<Course> objCourseList = obj.Courses.ToList();
-            ViewBag.Course = objCourseList;
+            List<Course> Lists = obj.Courses.ToList();
+            ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
+
+            List<Country> CountryList = obj.Countries.ToList();
+            ViewBag.CountryLists = new SelectList(CountryList, "CountryId", "CountryName");
+
+            List<State> StateList = obj.States.ToList();
+            ViewBag.StateLists = new SelectList(StateList, "StateId", "StateName");
+
+            List<City> CityList = obj.Cities.ToList();
+            ViewBag.CityLists = new SelectList(CityList, "CityId", "CityName");
             try
             {
                 User objUser = obj.Users.Find(id);
