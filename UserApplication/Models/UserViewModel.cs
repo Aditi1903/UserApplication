@@ -22,7 +22,7 @@ namespace UserApplication.Models
         [Required(ErrorMessage = "LastName is required")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "This field cannot be null")]
+        [Required(ErrorMessage = "Please select gender")]
         public string Gender { get; set; }
 
         [Required(ErrorMessage = "Please select Hobbies")]
@@ -34,6 +34,7 @@ namespace UserApplication.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}",
             ErrorMessage = "Password should be of minimum 6 characters with at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character")]
@@ -85,7 +86,7 @@ namespace UserApplication.Models
 
         [DisplayName("Zip code")]
         [Required(ErrorMessage = "Please enter Zipcode")]
-        [RegularExpression(@"^(\d{5,9})$", ErrorMessage = "ZipCode is not valid.")]
+        [RegularExpression(@"^(\d{6})$", ErrorMessage = "ZipCode is not valid.")]
         public int Zipcode { get; set; }
 
         [Required]
@@ -103,6 +104,20 @@ namespace UserApplication.Models
         //[Required]
         //[DisplayName("Subject")]
         public int SubjectId { get; set; }
+
+        [DisplayName("Country")]
+        public string CountryName { get; set; }
+
+        [DisplayName("State")]
+        public string StateName { get; set; }
+
+        [DisplayName("City")]
+        public string CityName { get; set; }
+
+        [DisplayName("Course")]
+        public string CourseName { get; set; }
+
+
     }
 }
 

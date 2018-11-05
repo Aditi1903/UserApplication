@@ -21,22 +21,28 @@ namespace UserApplication.Controllers
         /// Show the list of teachers with courses assigned to them
         /// </summary>
         /// <returns></returns>
-        public ActionResult TeachersCourse()
-        {
-            var listOfTeacherCourse = obj.Users.Where(u => u.RoleId == 3).ToList();
-            return View(listOfTeacherCourse);
+        //public ActionResult TeachersCourse()
+        //{
+        //    var listOfTeacherCourse = obj.Users.Where(u => u.RoleId == 3).ToList();
+        //    return View(listOfTeacherCourse);
 
-        }
-        
-        /// <summary>
-        /// List of subjects in courses
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult SubjectsInCourse(int id)
+        //}
+        public ActionResult TeachersCourse(int id)
         {
-            var listOfSubjectsInCourse = obj.SubjectsInCourses.Where(u => u.CourseId == id).ToList();
-            return View(listOfSubjectsInCourse);
+
+            var studentList = obj.Users.Where(u => u.RoleId == 4 && u.CourseId == id).ToList();
+            return View(studentList);
         }
+
+            /// <summary>
+            /// List of subjects in courses
+            /// </summary>
+            /// <returns></returns>
+            //public ActionResult SubjectsInCourse(int id)
+            //{
+            //   var listOfSubjectsInCourse = obj.SubjectsInCourses.Where(u => u.CourseId == id).ToList();
+            //   return View(listOfSubjectsInCourse);
+            //}
         /// <summary>
         /// Student details
         /// </summary>
@@ -44,13 +50,15 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult StudentDetail(int? id)                 
         {
+            User user = (User)Session["User"];
+            var usr = obj.Users.Find(user.UserId);
             {
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                User user = obj.Users.Find(id);
+                //User user = obj.Users.Find(id);
                 UserViewModel objUserViewModel = new UserViewModel();
 
                 objUserViewModel.FirstName = user.FirstName;
@@ -73,6 +81,10 @@ namespace UserApplication.Controllers
                 objUserViewModel.CityId = user.Address.CityId;
                 objUserViewModel.Zipcode = user.Address.Zipcode;
                 objUserViewModel.UserId = user.UserId;
+                objUserViewModel.CountryName = user.Address.Country.CountryName;
+                objUserViewModel.StateName = user.Address.State.StateName;
+                objUserViewModel.CityName = user.Address.City.CityName;
+                objUserViewModel.CourseName = user.Course.CourseName;
 
                 if (user == null)
                 {

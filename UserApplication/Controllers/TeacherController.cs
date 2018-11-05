@@ -22,7 +22,6 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList(int id)
         {
-            
             var studentList = obj.Users.Where(u => u.RoleId == 4 && u.CourseId == id).ToList();
             return View(studentList);
         }
@@ -61,6 +60,10 @@ namespace UserApplication.Controllers
                 objUserViewModel.StateId = user.Address.StateId;
                 objUserViewModel.CityId = user.Address.CityId;
                 objUserViewModel.Zipcode = user.Address.Zipcode;
+                objUserViewModel.CountryName = user.Address.Country.CountryName;
+                objUserViewModel.StateName = user.Address.State.StateName;
+                objUserViewModel.CityName = user.Address.City.CityName;
+                objUserViewModel.CourseName = user.Course.CourseName;
 
                 if (user == null)
                 {
@@ -76,13 +79,16 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult TeacherDetail(int? id)
         {
+            User user = (User)Session["User"];
+            var usr = obj.Users.Find(user.UserId);
+
             {
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                User user = obj.Users.Find(id);
+                //User user = obj.Users.Find(id);
                 UserViewModel objUserViewModel = new UserViewModel();
 
                 objUserViewModel.UserId = user.UserId;
@@ -105,6 +111,10 @@ namespace UserApplication.Controllers
                 objUserViewModel.StateId = user.Address.StateId;
                 objUserViewModel.CityId = user.Address.CityId;
                 objUserViewModel.Zipcode = user.Address.Zipcode;
+                objUserViewModel.CountryName = user.Address.Country.CountryName;
+                objUserViewModel.StateName = user.Address.State.StateName;
+                objUserViewModel.CityName = user.Address.City.CityName;
+                objUserViewModel.CourseName = user.Course.CourseName;
 
                 if (user == null)
                 {

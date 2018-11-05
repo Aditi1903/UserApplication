@@ -52,20 +52,19 @@ namespace UserApplication.Controllers
         public ActionResult RegistrationForm(UserViewModel userViewModel)
         {
 
-            //Dropdown for Role List
-            List<Role> List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
-            ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
+            ////Dropdown for Role List
+            //List < Role > List = obj.Roles.Where(u => u.RoleId != 1 && u.RoleId != 2).ToList();
+            //ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
 
-            //Dropdown for Course List
-            List<Course> Lists = obj.Courses.ToList();
-            ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
+            ////Dropdown for Course List
+            //List<Course> Lists = obj.Courses.ToList();
+            //ViewBag.CourseLists = new SelectList(Lists, "CourseId", "CourseName");
 
-            //Dropdown for Country List
-            List<Country> List1 = obj.Countries.ToList();
-            ViewBag.CountryList1 = new SelectList(List1, "CountryId", "CountryName");
+            ////Dropdown for Country List
+            //List<Country> List1 = obj.Countries.ToList();
+            //ViewBag.CountryList1 = new SelectList(List1, "CountryId", "CountryName");
 
             userViewModel.AddressId = 1;
-            userViewModel.UserId = 1;
 
             //Object of address table
             Address address = new Address();
@@ -234,10 +233,12 @@ namespace UserApplication.Controllers
                 }
                 else if (LoginDetails.RoleId == 3)
                 {
+                    Session["User"] = LoginDetails;
                     return RedirectToAction("TeacherDetail", "Teacher",new { id = LoginDetails.UserId });
                 }
                 else
                 {
+                    Session["User"] = LoginDetails;
                     return RedirectToAction("StudentDetail", "Student",new { id = LoginDetails.UserId });
                 }
            

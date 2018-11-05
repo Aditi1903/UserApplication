@@ -298,6 +298,7 @@ namespace UserApplication.Controllers
                 User objUser = obj.Users.Find(id);
                 if (ModelState.IsValid)
                 {
+                    objUser.UserId = objUserViewModel.UserId;
                     objUser.FirstName = objUserViewModel.FirstName;
                     objUser.LastName = objUserViewModel.LastName;
                     objUser.Gender = objUserViewModel.Gender;
@@ -439,6 +440,11 @@ namespace UserApplication.Controllers
                 objUserViewModel.StateId = user.Address.StateId;
                 objUserViewModel.CityId = user.Address.CityId;
                 objUserViewModel.Zipcode = user.Address.Zipcode;
+                objUserViewModel.CountryName = user.Address.Country.CountryName;
+                objUserViewModel.StateName = user.Address.State.StateName;
+                objUserViewModel.CityName = user.Address.City.CityName;
+                objUserViewModel.CourseName = user.Course.CourseName;
+
 
                 if (user == null)
                 {
@@ -464,10 +470,17 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult CreateCourse(Course objCourse)
         {
-            obj.Courses.Add(objCourse);      //Insert data 
-            obj.SaveChanges();               //Save data
-
-            return RedirectToAction("CourseList");
+            if (objCourse.CourseName == null)
+            {
+                Console.WriteLine("Course cannot be null");
+            }
+            else
+            {
+                obj.Courses.Add(objCourse);      //Insert data 
+                obj.SaveChanges();               //Save data
+                return RedirectToAction("CourseList");
+            }
+            return View(objCourse);
         }
         /// <summary>
         /// GET : Super Admin can create subject
@@ -486,10 +499,17 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult CreateSubject(Subject objSubject)
         {
-            obj.Subjects.Add(objSubject);
-            obj.SaveChanges();
-
-            return RedirectToAction("SubjectList");
+            if (objSubject.SubjectName == null)
+            {
+                Console.WriteLine("Subject cannot be null");
+            }
+            else
+            {
+                obj.Subjects.Add(objSubject);
+                obj.SaveChanges();
+                return RedirectToAction("SubjectList");
+            }
+            return View(objSubject);
         }
         /// <summary>
         /// GET: Super Admin can assign subject to course

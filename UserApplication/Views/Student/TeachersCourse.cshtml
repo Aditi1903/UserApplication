@@ -116,10 +116,12 @@
             @*@Html.ActionLink("Subject List", "TeachersSubject", new { id = item.CourseId })*@
             @*@Html.ActionLink("Details", "Details", new { id=item.UserId }) |
         @Html.ActionLink("Delete", "Delete", new { id=item.UserId })*@
-            @Html.ActionLink("Subject List", "SubjectsInCourse",new { id = item.CourseId })
-        </td>
-      </tr>
-     }
-</table>
+            @Html.ActionLink("Back to profile", "StudentDetail", new { id = item.UserId }) |
+            @*@Html.ActionLink("Subject Details", "SubjectInCourse")*@ 
+                </td>
+              </tr>
+             }
+        </table>
+
 
 

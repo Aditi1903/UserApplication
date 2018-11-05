@@ -13,6 +13,7 @@ namespace UserApplication.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CourseId { get; set; }
+        //[Required]
         [DisplayName ("Course Name")]
         public string CourseName { get; set; }
 

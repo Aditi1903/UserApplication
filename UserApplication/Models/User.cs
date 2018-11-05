@@ -28,13 +28,15 @@ namespace UserApplication.Models
         [Required(ErrorMessage = "Please select Hobbies")]
         public string Hobbies { get; set; }
 
-        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}",
-        ErrorMessage = "Password should be of minimum 6 characters with at least 1 Uppercase Alphabet, " +
+        [Required]
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}", ErrorMessage = "Password should be of minimum 6 characters with at least 1 Uppercase Alphabet, " +
             "1 Lowercase Alphabet, 1 Number and 1 Special Character")]
+       
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter valid DOB")]

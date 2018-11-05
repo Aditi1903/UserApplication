@@ -477,6 +477,7 @@
     <Content Include="Views\Teacher\EditTeacherProfile.cshtml" />
     <Content Include="Views\Shared\_LoginButtonPartial.cshtml" />
     <Content Include="Views\Teacher\UserList.cshtml" />
+    <Content Include="Views\Shared\_BackToListButtonPartialForTeacher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

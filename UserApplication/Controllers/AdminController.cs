@@ -89,44 +89,50 @@ namespace UserApplication.Controllers
             obj.SaveChanges();           //Save data in database
             int latestAddressId = address.AddressId;
 
+
             //Object of user table 
             User user = new User();
             //Binding the fields 
-            user.UserId = userViewModel.UserId;
-            user.FirstName = userViewModel.FirstName;
-            user.LastName = userViewModel.LastName;
-            user.Gender = userViewModel.Gender;
-            user.Hobbies = userViewModel.Hobbies;
-            user.Password = userViewModel.Password;
-            user.Email = userViewModel.Email;
-            user.DOB = userViewModel.DOB;
-            user.DateCreated = DateTime.Now;
-            user.DateModified = DateTime.Now;
-            user.IsActive = userViewModel.IsActive;
-            user.RoleId = userViewModel.RoleId;
-            user.CourseId = userViewModel.CourseId;
-            user.AddressLine1 = userViewModel.AddressLine1;
-            user.AddressLine2 = userViewModel.AddressLine2;
-            user.AddressId = latestAddressId;
+            if (ModelState.IsValid)
+            {
+                user.UserId = userViewModel.UserId;
+                user.FirstName = userViewModel.FirstName;
+                user.LastName = userViewModel.LastName;
+                user.Gender = userViewModel.Gender;
+                user.Hobbies = userViewModel.Hobbies;
+                user.Password = userViewModel.Password;
+                user.Email = userViewModel.Email;
+                user.DOB = userViewModel.DOB;
+                user.DateCreated = DateTime.Now;
+                user.DateModified = DateTime.Now;
+                user.IsActive = userViewModel.IsActive;
+                user.RoleId = userViewModel.RoleId;
+                user.CourseId = userViewModel.CourseId;
+                user.AddressLine1 = userViewModel.AddressLine1;
+                user.AddressLine2 = userViewModel.AddressLine2;
+                user.AddressId = latestAddressId;
 
-            obj.Users.Add(user);      //Insert data in user table
-            obj.SaveChanges();         //Save data in database
+                obj.Users.Add(user);      //Insert data in user table
+                obj.SaveChanges();         //Save data in database
 
-            int latestUserId = user.UserId;
+                int latestUserId = user.UserId;
 
-            UserInRole userInRole = new UserInRole();
-            userInRole.UserId = latestUserId;
-            userInRole.RoleId = userViewModel.RoleId;
+                UserInRole userInRole = new UserInRole();
+                userInRole.UserId = latestUserId;
+                userInRole.RoleId = userViewModel.RoleId;
 
-            obj.UserInRoles.Add(userInRole);
-            obj.SaveChanges();
+                obj.UserInRoles.Add(userInRole);
+                obj.SaveChanges();
 
-            return RedirectToAction("UserList");
+                return RedirectToAction("UserList");
+            }
+            return View(userViewModel);
         }
-        /// <summary>
-        /// Get all countries
-        /// </summary>
-        SqlConnection UserDbContext = new SqlConnection(ConfigurationManager.ConnectionStrings["UserDbContext"].ConnectionString);
+            
+    /// <summary>
+    /// Get all countries
+    /// </summary>
+    SqlConnection UserDbContext = new SqlConnection(ConfigurationManager.ConnectionStrings["UserDbContext"].ConnectionString);
         public DataSet Get_Country()
         {
             SqlCommand com = new SqlCommand("Select * from Countries", UserDbContext);
@@ -308,6 +314,7 @@ namespace UserApplication.Controllers
                 User objUser = obj.Users.Find(id);
                 if (ModelState.IsValid)
                 {
+                    objUser.UserId = objUserViewModel.UserId;
                     objUser.FirstName = objUserViewModel.FirstName;
                     objUser.LastName = objUserViewModel.LastName;
                     objUser.Gender = objUserViewModel.Gender;
@@ -327,7 +334,7 @@ namespace UserApplication.Controllers
                     objUser.Address.Zipcode = objUserViewModel.Zipcode;
 
                     //  obj.Users.Add(objUser);
-                    obj.SaveChanges();    // //Save data in database
+                    obj.SaveChanges();                //Save data in database
                     return RedirectToAction("UserList");
 
                 }
@@ -373,6 +380,10 @@ namespace UserApplication.Controllers
                 objUserViewModel.StateId = user.Address.StateId;
                 objUserViewModel.CityId = user.Address.CityId;
                 objUserViewModel.Zipcode = user.Address.Zipcode;
+                objUserViewModel.CountryName = user.Address.Country.CountryName;
+                objUserViewModel.StateName = user.Address.State.StateName;
+                objUserViewModel.CityName = user.Address.City.CityName;
+                objUserViewModel.CourseName = user.Course.CourseName;
 
                 if (user == null)
                 {
@@ -488,7 +499,7 @@ namespace UserApplication.Controllers
             obj.SaveChanges();           //Save data in database
 
             //return View(objTeacherInSubject);
-            return RedirectToAction("UserList");
+            return RedirectToAction("TeacherSubjectList");
         }
         /// <summary>
         /// GET:Admin can create course
@@ -507,10 +518,18 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult CreateCourse(Course objCourse)
         {
-            obj.Courses.Add(objCourse);      //Insert data 
-            obj.SaveChanges();               //Save data
+            if (objCourse.CourseName == null)
+            {
+                Console.WriteLine("Course cannot be null");
+            }
+            else
+            {
+                obj.Courses.Add(objCourse);      //Insert data 
+                obj.SaveChanges();               //Save data
 
-            return RedirectToAction("CourseList");
+                return RedirectToAction("CourseList");
+            }
+            return View(objCourse);
         }
         /// <summary>
         /// GET : Admin can create subject
@@ -529,10 +548,20 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult CreateSubject(Subject objSubject)
         {
-            obj.Subjects.Add(objSubject);
-            obj.SaveChanges();
+            if (objSubject.SubjectName == null)
+            {
+                Console.WriteLine("Subject cannot be null");
+            }
+            else
+            {
+                obj.Subjects.Add(objSubject);
+                obj.SaveChanges();
 
-            return RedirectToAction("SubjectList");
+
+                return RedirectToAction("SubjectList");
+            }
+            return View(objSubject);
+            
         }
         /// <summary>
         /// GET: Admin can assign subject to course
