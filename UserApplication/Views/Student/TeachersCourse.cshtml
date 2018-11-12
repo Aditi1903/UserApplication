@@ -10,7 +10,7 @@
 <p>
     @Html.ActionLink(" ", " ")
 </p>
-<table class="table">
+<table class="table table-bordered table-responsive table-hover">
     <tr>
         @*<th>
                 @Html.DisplayNameFor(model => model.Address.AddressId)
@@ -117,8 +117,9 @@
             @*@Html.ActionLink("Details", "Details", new { id=item.UserId }) |
         @Html.ActionLink("Delete", "Delete", new { id=item.UserId })*@
             @Html.ActionLink("Back to profile", "StudentDetail", new { id = item.UserId }) |
-            @*@Html.ActionLink("Subject Details", "SubjectInCourse")*@ 
-                </td>
+            @Html.ActionLink("Subject List", "SubjectInCourse", new { id = item.CourseId }) 
+            @*@Html.ActionLink("Subject Details", "SubjectInCourse")*@
+        </td>
               </tr>
              }
         </table>

@@ -690,6 +690,7 @@ namespace UserApplication.Controllers
             var listOfTeachersSubject = obj.TeacherInSubjects.ToList();
             return View(listOfTeachersSubject);
         }
+       
     }
 }
         

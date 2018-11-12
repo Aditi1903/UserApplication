@@ -196,7 +196,7 @@ namespace UserApplication.Controllers
                     objUser.RoleId = objUserViewModel.RoleId;
                     objUser.CourseId = objUserViewModel.CourseId;
                     objUser.IsActive = objUserViewModel.IsActive;
-                    objUser.DateModified = DateTime.Now;
+                    objUser.DateModified = DateTime.Now;  
                     objUser.AddressLine1 = objUserViewModel.AddressLine1;
                     objUser.AddressLine2 = objUserViewModel.AddressLine2;
                     objUser.Address.CountryId = objUserViewModel.CountryId;
@@ -214,6 +214,16 @@ namespace UserApplication.Controllers
             {
                 throw ex;
             }
+        }
+        /// <summary>
+        /// List of Subjects In the Course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult SubjectInCourse(int id)
+        {
+            var listOfTeachersSubject = obj.SubjectsInCourses.Where(u => u.CourseId == id).ToList();
+            return View(listOfTeachersSubject);
         }
 
         ///// <summary>

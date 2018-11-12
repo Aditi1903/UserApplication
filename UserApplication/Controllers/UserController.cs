@@ -241,9 +241,8 @@ namespace UserApplication.Controllers
                     Session["User"] = LoginDetails;
                     return RedirectToAction("StudentDetail", "Student",new { id = LoginDetails.UserId });
                 }
-           
 
-            return View("Login");
+                 return View("Login");
         }
         /// <summary>
         /// Logout

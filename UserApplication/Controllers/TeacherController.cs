@@ -232,7 +232,7 @@ namespace UserApplication.Controllers
                     objUser.Address.Zipcode = objUserViewModel.Zipcode;
 
                     //  obj.Users.Add(objUser);
-                    obj.SaveChanges();    // //Save data in database
+                    obj.SaveChanges();     //Save data in database
                     return RedirectToAction("TeacherDetail",new { id = objUser.UserId });
 
                 }
