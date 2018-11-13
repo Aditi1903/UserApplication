@@ -49,9 +49,9 @@ namespace UserApplication.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter valid DOB")]
-        //[Display(Name = "DOB")]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}"/*, ApplyFormatInEditMode = true*/)]
+        [Display(Name = "DOB")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
 
         [Required(ErrorMessage = "Please select the course")]

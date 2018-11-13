@@ -7,6 +7,7 @@ using System.Linq;
 //using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using UserApplication.Models;
 
 namespace UserApplication.Controllers
@@ -108,6 +109,8 @@ namespace UserApplication.Controllers
             UserInRole userInRole = new UserInRole();
             userInRole.UserId = latestUserId;
             userInRole.RoleId = userViewModel.RoleId;
+
+            user.IsActive = true;
 
             obj.UserInRoles.Add(userInRole);
             obj.SaveChanges();
@@ -222,7 +225,9 @@ namespace UserApplication.Controllers
         public ActionResult Login(User user)
         {
             var LoginDetails = obj.Users.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
-            if (LoginDetails != null)
+            Session["Login"] = LoginDetails;
+            
+                if (LoginDetails != null)
                 if (LoginDetails.RoleId == 1)
                 {
                     return RedirectToAction("UserList", "SuperAdmin");
@@ -250,9 +255,19 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
-            return RedirectToAction("Login");
-        }
 
+            Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+            Session.Abandon();
+            Session.Clear();
+            Response.Cookies.Clear();
+            Session.RemoveAll();
+            Session["Login"] = null;
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "User");
+        }
+        
     }
 }
 

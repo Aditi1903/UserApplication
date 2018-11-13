@@ -26,9 +26,8 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-            var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
-            return View(listOfUsers);
-            
+           var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
+           return View(listOfUsers);
         }
         /// <summary>
         /// GET:Super Admin can create user
