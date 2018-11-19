@@ -1,9 +1,33 @@
 ﻿@model IEnumerable<UserApplication.Models.User>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*@Html.ActionLink("Applicaion Name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+        </div>
+        <div class="navbar-collapse collapse">
+            @*@Html.ActionLink("Teacher Detail", "TeacherDetail", "Teacher", new { area = "" }, new { @class = "navbar-brand" })*@
+            @Html.ActionLink("Student List", "UserList", "Teacher", new { area = "" }, new { @class = "navbar-brand" })
+            @*@Html.ActionLink("Teacher Detail", "TeacherDetail", "Teacher", new { id = Model.UserId}, new { @class = "navbar-brand" })*@
+            <ul class="nav navbar-right">
+                @Html.ActionLink("LogOut", "LogOut", "User", new { area = "" }, new { @class = "navbar-brand" })
+            </ul>
+        </div>
+    </div>
+</div>
+
 
 @{
     ViewBag.Title = "UserList";
     Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
+<h1 align="middle"><b>VIDHYA NIKETAN</b></h1>
+<h2 align="middle"><i>THE INFINITE CAMPUS</i></h2>
+<center><img src=" http://www.vidyaniketansaket.in/image/f-logo.png" width=" 90" height=" 90" /></center>
 
 <h2>Student of your course</h2>
 
@@ -117,7 +141,7 @@
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |*@
                 @Html.ActionLink("Student Details", "UserDetails", new { id = item.UserId }) |
-                @Html.ActionLink("Back to profile", "TeacherDetail", new { id=item.UserId })
+                @Html.ActionLink("Back to profile", "TeacherDetail", new { id = item.UserId })
 
             </td>
         </tr>

@@ -26,7 +26,11 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-           var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var listOfUsers = obj.Users.Where(u => u.RoleId != 1).ToList();
            return View(listOfUsers);
         }
         /// <summary>
@@ -36,6 +40,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult CreateUser()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             //Dropdown for Role List
             List<Role> List = obj.Roles.Where(u => u.RoleId != 1 ).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
@@ -58,7 +66,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult CreateUser(UserViewModel userViewModel)
         {
-
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             //Dropdown for Role List
             List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
@@ -215,6 +226,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult EditUser(int id)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             //Dropdown for Role List
             List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
@@ -260,6 +275,7 @@ namespace UserApplication.Controllers
             objUserViewModel.StateId = objUser.Address.StateId;
             objUserViewModel.CityId = objUser.Address.CityId;
             objUserViewModel.Zipcode = objUser.Address.Zipcode;
+            objUserViewModel.ConfirmPassword = objUser.Password;
 
             if (objUser == null)
             {
@@ -276,6 +292,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             //Dropdown for Role List
             List<Role> List = obj.Roles.Where(u => u.RoleId != 1).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
@@ -335,6 +355,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult DeleteUser(int? id)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -375,6 +399,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult DeleteUser(int id)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             try
             {
                 if (ModelState.IsValid)
@@ -412,6 +440,10 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserDetails(int? id)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             {
                 if (id == null)
                 {
@@ -459,6 +491,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult CreateCourse()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             return View();
         }
         /// <summary>
@@ -469,6 +505,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult CreateCourse(Course objCourse)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             if (objCourse.CourseName == null)
             {
                 Console.WriteLine("Course cannot be null");
@@ -488,6 +528,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult CreateSubject()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             return View();
         }
         /// <summary>
@@ -498,6 +542,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult CreateSubject(Subject objSubject)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             if (objSubject.SubjectName == null)
             {
                 Console.WriteLine("Subject cannot be null");
@@ -514,9 +562,13 @@ namespace UserApplication.Controllers
         /// GET: Super Admin can assign subject to course
         /// </summary>
         /// <returns></returns>
-
+        [HttpGet]
         public ActionResult AssignSubjectForCourse()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             List<Course> List = obj.Courses.ToList();
             ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName");
 
@@ -533,6 +585,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult AssignSubjectForCourse(SubjectInCourse objSubjectInCourse)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             List<Course> List = obj.Courses.ToList();
             ViewBag.CourseList = new SelectList(List, "CourseId", "CourseName", objSubjectInCourse.CourseId);
 
@@ -552,6 +608,10 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult CourseList()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var listOfCourse = obj.Courses.ToList();
             return View(listOfCourse);
         }
@@ -561,6 +621,10 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult SubjectList()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var listOfSubject = obj.Subjects.ToList();
             return View(listOfSubject);
         }
@@ -572,6 +636,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult DeleteCourse(int id)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var removeCourse = obj.Courses.Single(x => x.CourseId == id);
 
             return View(removeCourse);
@@ -585,6 +653,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult DeleteCourse(int id, Course objCourse)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             try
             {
                 // TODO: Add delete logic here
@@ -608,6 +680,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult DeleteSubject(int id)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var removeSubject = obj.Subjects.Single(x => x.SubjectId == id);
 
             return View(removeSubject);
@@ -621,6 +697,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult DeleteSubject(int id, Subject objSubject)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             try
             {
                 // TODO: Add delete logic here
@@ -642,8 +722,56 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult CourseAndSubjectList()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var listOfCourseAndSubject = obj.SubjectsInCourses.ToList();
             return View(listOfCourseAndSubject);
+        }
+        /// <summary>
+        ///GET: Delete course and subject
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteCourseAndSubject(int id)
+        {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var removeCourseAndSubject = obj.SubjectsInCourses.Single(x => x.SubjectInCourseId == id);
+
+            return View(removeCourseAndSubject);
+        }
+        /// <summary>
+        /// POST : Delete course and subject
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objCourse"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteCourseAndSubject(int id, SubjectInCourse objSubjectInCourse)
+        {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            try
+            {
+                // TODO: Add delete logic here
+                var removeCourseAndSubject = obj.SubjectsInCourses.Single(x => x.SubjectInCourseId == id);
+                obj.SubjectsInCourses.Remove(removeCourseAndSubject);
+
+                obj.SaveChanges();
+
+                return RedirectToAction("CourseAndSubjectList");
+            }
+            catch
+            {
+                return View();
+            }
         }
         /// <summary>
         /// GET:Super Admin can assign subjects to teachers
@@ -652,6 +780,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult AssignSubjectToTeacher()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
             ViewBag.TeacherList = new SelectList(List, "UserId", "FirstName");
 
@@ -668,6 +800,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult AssignSubjectToTeacher(TeacherInSubject objTeacherInSubject)
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             List<User> List = obj.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
             ViewBag.TeacherList = new SelectList(List, "UserId", "FirstName", objTeacherInSubject.UserId);
 
@@ -686,6 +822,10 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult TeacherSubjectList()
         {
+            if (Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var listOfTeachersSubject = obj.TeacherInSubjects.ToList();
             return View(listOfTeachersSubject);
         }

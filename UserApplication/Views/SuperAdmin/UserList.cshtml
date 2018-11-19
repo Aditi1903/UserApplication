@@ -1,25 +1,54 @@
 ﻿@model IEnumerable<UserApplication.Models.User>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*@Html.ActionLink("Applicaion Name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+        </div>
+        <div class="navbar-collapse collapse">
+            @Html.ActionLink("User List", "UserList", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Add Course", "CreateCourse", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Course List", "CourseList", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Subject List", "SubjectList", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Assign Subject To Teacher", "AssignSubjectToTeacher", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Add Subject", "CreateSubject", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Assign Subject To Course", "AssignSubjectForCourse", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Teacher Subject List", "TeacherSubjectList", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Course And Subject List", "CourseAndSubjectList", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand" })
 
+            <ul class="nav navbar-right">
+                @Html.ActionLink("LogOut", "LogOut", "User", new { area = "" }, new { @class = "navbar-brand" })
+            </ul>
+        </div>
+    </div>
+</div>
 @{
     ViewBag.Title = "UserList";
     Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
+<h1 align="middle"><b>VIDHYA NIKETAN</b></h1>
+<h2 align="middle"><i>THE INFINITE CAMPUS</i></h2>
+<center><img src=" http://www.vidyaniketansaket.in/image/f-logo.png" width=" 90" height=" 90" /></center>
 
 <h1><i>Welcome Samyak !!!</i></h1>
 <h2>User List</h2>
 
 <p>
     @Html.Partial("_CreateButtonPartial")
-    @Html.Partial("_CreateCourseButtonPartial")
+    @*@Html.Partial("_CreateCourseButtonPartial")*@
 
-   
+
 </p>
 
 
 <table class="table table-bordered table-responsive table-hover">
-    
+
     <tr>
-        
+
         <th>
 
             @Html.DisplayNameFor(model => model.FirstName)
@@ -38,16 +67,16 @@
         </th>
         @*<th>
 
-            @Html.DisplayNameFor(model => model.Password)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Password)
+            </th>*@
         <th>
 
             @Html.DisplayNameFor(model => model.Email)
         </th>
         @*<th>
 
-            @Html.DisplayNameFor(model => model.DOB)
-        </th>*@
+                @Html.DisplayNameFor(model => model.DOB)
+            </th>*@
         <th>
 
             @Html.DisplayNameFor(model => model.Course.CourseName)
@@ -74,13 +103,15 @@
             </th>*@
         @*<th>
 
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>*@
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>*@
         <th>
 
             @Html.DisplayNameFor(model => model.Role.RoleName)
         </th>
-       
+        <th>
+
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -99,14 +130,14 @@
                 @Html.DisplayFor(modelItem => item.Hobbies)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.DOB)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.DOB)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Course.CourseName)
             </td>
@@ -126,22 +157,22 @@
                     @Html.DisplayFor(modelItem => item.DateModified)
                 </td>*@
             @*<td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Role.RoleName)
             </td>
-            
+
 
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId })
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserId })
                 @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })
-                @if (item.Role.RoleName != "Student" && item.Role.RoleName != "Admin")
+                @*@if (item.Role.RoleName != "Student" && item.Role.RoleName != "Admin")
                 {
                     @Html.ActionLink("Assign Subject", "AssignSubjectToTeacher", new { id = item.UserId })
 
-                }
+                }*@
             </td>
         </tr>
     }

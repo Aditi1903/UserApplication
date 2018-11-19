@@ -226,8 +226,9 @@ namespace UserApplication.Controllers
         {
             var LoginDetails = obj.Users.Where(u => u.Email == user.Email && u.Password == user.Password).FirstOrDefault();
             Session["Login"] = LoginDetails;
-            
-                if (LoginDetails != null)
+
+            if (LoginDetails != null)
+            {
                 if (LoginDetails.RoleId == 1)
                 {
                     return RedirectToAction("UserList", "SuperAdmin");
@@ -239,15 +240,23 @@ namespace UserApplication.Controllers
                 else if (LoginDetails.RoleId == 3)
                 {
                     Session["User"] = LoginDetails;
-                    return RedirectToAction("TeacherDetail", "Teacher",new { id = LoginDetails.UserId });
+                    return RedirectToAction("TeacherDetail", "Teacher", new { id = LoginDetails.UserId });
                 }
-                else
+                else if (LoginDetails.RoleId == 4)
                 {
                     Session["User"] = LoginDetails;
-                    return RedirectToAction("StudentDetail", "Student",new { id = LoginDetails.UserId });
+                    return RedirectToAction("StudentDetail", "Student", new { id = LoginDetails.UserId });
                 }
+            }
 
-                 return View("Login");
+            else
+            {
+                ModelState.AddModelError("", "Email and Password do not match");
+            }
+
+            
+
+            return View("Login");
         }
         /// <summary>
         /// Logout

@@ -22,6 +22,10 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserList(int id)
         {
+            if (Session["Login"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var studentList = obj.Users.Where(u => u.RoleId == 4 && u.CourseId == id).ToList();
             return View(studentList);
         }
@@ -32,6 +36,10 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult UserDetails(int? id)
         {
+            if (Session["Login"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             {
                 if (id == null)
                 {
@@ -79,6 +87,10 @@ namespace UserApplication.Controllers
         /// <returns></returns>
         public ActionResult TeacherDetail(int? id)
         {
+            if (Session["Login"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             User user = (User)Session["User"];
             var usr = obj.Users.Find(user.UserId);
 
@@ -91,30 +103,30 @@ namespace UserApplication.Controllers
                 //User user = obj.Users.Find(id);
                 UserViewModel objUserViewModel = new UserViewModel();
 
-                objUserViewModel.UserId = user.UserId;
-                objUserViewModel.FirstName = user.FirstName;
-                objUserViewModel.LastName = user.LastName;
-                objUserViewModel.Gender = user.Gender;
-                objUserViewModel.Hobbies = user.Hobbies;
-                objUserViewModel.Email = user.Email;
-                objUserViewModel.Password = user.Password;
-                objUserViewModel.DOB = user.DOB;
-                objUserViewModel.RoleId = user.RoleId;
-                objUserViewModel.CourseId = user.CourseId;
+                objUserViewModel.UserId = usr.UserId;
+                objUserViewModel.FirstName = usr.FirstName;
+                objUserViewModel.LastName = usr.LastName;
+                objUserViewModel.Gender = usr.Gender;
+                objUserViewModel.Hobbies = usr.Hobbies;
+                objUserViewModel.Email = usr.Email;
+                objUserViewModel.Password = usr.Password;
+                objUserViewModel.DOB = usr.DOB;
+                objUserViewModel.RoleId = usr.RoleId;
+                objUserViewModel.CourseId = usr.CourseId;
                 //objUserViewModel.AddressId = user.AddressId;
-                objUserViewModel.IsActive = user.IsActive;
-                objUserViewModel.DateCreated = user.DateCreated;
-                objUserViewModel.DateModified = user.DateModified;
-                objUserViewModel.AddressLine1 = user.AddressLine1;
-                objUserViewModel.AddressLine2 = user.AddressLine2;
-                objUserViewModel.CountryId = user.Address.CountryId;
-                objUserViewModel.StateId = user.Address.StateId;
-                objUserViewModel.CityId = user.Address.CityId;
-                objUserViewModel.Zipcode = user.Address.Zipcode;
-                objUserViewModel.CountryName = user.Address.Country.CountryName;
-                objUserViewModel.StateName = user.Address.State.StateName;
-                objUserViewModel.CityName = user.Address.City.CityName;
-                objUserViewModel.CourseName = user.Course.CourseName;
+                objUserViewModel.IsActive = usr.IsActive;
+                objUserViewModel.DateCreated = usr.DateCreated;
+                objUserViewModel.DateModified = usr.DateModified;
+                objUserViewModel.AddressLine1 = usr.AddressLine1;
+                objUserViewModel.AddressLine2 = usr.AddressLine2;
+                objUserViewModel.CountryId = usr.Address.CountryId;
+                objUserViewModel.StateId = usr.Address.StateId;
+                objUserViewModel.CityId = usr.Address.CityId;
+                objUserViewModel.Zipcode = usr.Address.Zipcode;
+                objUserViewModel.CountryName = usr.Address.Country.CountryName;
+                objUserViewModel.StateName = usr.Address.State.StateName;
+                objUserViewModel.CityName = usr.Address.City.CityName;
+                objUserViewModel.CourseName = usr.Course.CourseName;
 
                 if (user == null)
                 {
@@ -131,6 +143,10 @@ namespace UserApplication.Controllers
         [HttpGet]
         public ActionResult EditTeacherProfile(int id)
         {
+            if (Session["Login"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             //Dropdown for Role List
             List<Role> List = obj.Roles.Where(u=>u.RoleId==3).ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
@@ -154,27 +170,29 @@ namespace UserApplication.Controllers
             }
 
             User objUser = obj.Users.Find(id);
-            UserViewModel objUserViewModel = new UserViewModel();
-
-            objUserViewModel.UserId = objUser.UserId;
-            objUserViewModel.FirstName = objUser.FirstName;
-            objUserViewModel.LastName = objUser.LastName;
-            objUserViewModel.Gender = objUser.Gender;
-            objUserViewModel.Hobbies = objUser.Hobbies;
-            objUserViewModel.Email = objUser.Email;
-            objUserViewModel.Password = objUser.Password;
-            objUserViewModel.DOB = objUser.DOB;
-            objUserViewModel.RoleId = objUser.RoleId;
-            objUserViewModel.CourseId = objUser.CourseId;
-            objUserViewModel.IsActive = objUser.IsActive;
-            objUser.DateModified = DateTime.Now;
-            objUserViewModel.AddressId = objUser.AddressId;
-            objUserViewModel.AddressLine1 = objUser.AddressLine1;
-            objUserViewModel.AddressLine2 = objUser.AddressLine2;
-            objUserViewModel.CountryId = objUser.Address.CountryId;
-            objUserViewModel.StateId = objUser.Address.StateId;
-            objUserViewModel.CityId = objUser.Address.CityId;
-            objUserViewModel.Zipcode = objUser.Address.Zipcode;
+            UserViewModel objUserViewModel = new UserViewModel
+            {
+                UserId = objUser.UserId,
+                FirstName = objUser.FirstName,
+                LastName = objUser.LastName,
+                Gender = objUser.Gender,
+                Hobbies = objUser.Hobbies,
+                Email = objUser.Email,
+                Password = objUser.Password,
+                DOB = objUser.DOB,
+                RoleId = objUser.RoleId,
+                CourseId = objUser.CourseId,
+                IsActive = objUser.IsActive,
+                //bjUser.DateModified = DateTime.Now;
+                AddressId = objUser.AddressId,
+                AddressLine1 = objUser.AddressLine1,
+                AddressLine2 = objUser.AddressLine2,
+                CountryId = objUser.Address.CountryId,
+                StateId = objUser.Address.StateId,
+                CityId = objUser.Address.CityId,
+                Zipcode = objUser.Address.Zipcode,
+                ConfirmPassword = objUser.Password
+            };
 
             if (objUser == null)
             {
@@ -191,6 +209,10 @@ namespace UserApplication.Controllers
         [HttpPost]
         public ActionResult EditTeacherProfile(int id, UserViewModel objUserViewModel)
         {
+            if (Session["Login"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             //Dropdown for Role List
             List<Role> List = obj.Roles.ToList();
             ViewBag.RoleList = new SelectList(List, "RoleId", "RoleName");
@@ -210,8 +232,8 @@ namespace UserApplication.Controllers
             try
             {
                 User objUser = obj.Users.Find(id);
-                if (ModelState.IsValid)
-                {
+                 if (ModelState.IsValid)
+                 {
                     objUser.UserId = objUserViewModel.UserId;
                     objUser.FirstName = objUserViewModel.FirstName;
                     objUser.LastName = objUserViewModel.LastName;
@@ -235,8 +257,8 @@ namespace UserApplication.Controllers
                     obj.SaveChanges();     //Save data in database
                     return RedirectToAction("TeacherDetail",new { id = objUser.UserId });
 
-                }
-                return View(objUserViewModel);
+                 }
+                  return View(objUserViewModel);
             }
             catch (Exception ex)
             {

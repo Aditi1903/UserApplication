@@ -1,21 +1,49 @@
 ﻿@model IEnumerable<UserApplication.Models.Course>
-
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*@Html.ActionLink("Applicaion Name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+        </div>
+        <div class="navbar-collapse collapse">
+            @Html.ActionLink("User List", "UserList", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Add Course", "CreateCourse", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Course List", "CourseList", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Subject List", "SubjectList", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Assign Subject To Teacher", "AssignSubject", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Add Subject", "CreateSubject", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Assign Subject To Course", "AssignSubjectForCourse", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Course And Subject List", "CourseAndSubjectList", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Teacher Subject List", "TeacherSubjectList", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+            <ul class="nav navbar-right">
+                @Html.ActionLink("LogOut", "LogOut", "User", new { area = "" }, new { @class = "navbar-brand" })
+            </ul>
+        </div>
+    </div>
+</div>
 @{
     ViewBag.Title = "CourseList";
     Layout = "~/Views/Shared/_LogOutPage.cshtml";
 }
+<h1 align="middle"><b>VIDHYA NIKETAN</b></h1>
+<h2 align="middle"><i>THE INFINITE CAMPUS</i></h2>
+<center><img src=" http://www.vidyaniketansaket.in/image/f-logo.png" width=" 90" height=" 90" /></center>
 
 <h2>Course List</h2>
 
 <p>
     @Html.ActionLink(" ", " ")
 </p>
-<table class="table">
+<table class="table table-bordered table-responsive table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.CourseName)
         </th>
-        <th></th>
+        
     </tr>
 
     @foreach (var item in Model)
@@ -24,11 +52,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CourseName)
             </td>
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |*@
-                @Html.ActionLink("Delete Course", "DeleteCourse", new { id = item.CourseId })
-            </td>
+         
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |*@
+                    @*@Html.ActionLink("Details", "Details", new { id = item.CourseId })*@ 
+                @*@Html.ActionLink("Delete Course", "DeleteCourse", new { id = item.CourseId })*@
+            
         </tr>
     }
 
